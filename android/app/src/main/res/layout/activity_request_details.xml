@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="request" type="io.codelabs.digitutor.data.model.Request"/>
+        <variable name="user" type="io.codelabs.digitutor.data.model.Parent"/>
+        <import type="io.codelabs.digitutor.data.BaseUser"/>
+        <import type="android.text.format.DateUtils"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <io.codelabs.widget.ForegroundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/container"
+            tools:context=".view.RequestDetailsActivity"
+            android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:id="@+id/app_bar"
+                style="?appBarLayoutStyle"
+                android:layout_height="@dimen/shot_collapsed_app_bar_height">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_scrollFlags="exitUntilCollapsed|scroll"
+                    app:title="@string/request_details"
+                    app:contentScrim="@color/scrim"
+                    android:id="@+id/collapsing_toolbar"
+                    app:toolbarId="@id/toolbar">
+
+                <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"
+                        app:navigationIcon="@drawable/ic_back_light"
+                        android:id="@+id/toolbar"/>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include android:id="@+id/loading"
+                 layout="@layout/loading"
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 android:layout_gravity="center"
+                 android:visibility="@{user == null ? View.VISIBLE : View.GONE}"/>
+
+        <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:orientation="vertical"
+                                                   android:visibility="@{user != null ? View.VISIBLE : View.GONE}">
+
+            <io.codelabs.widget.BaselineGridTextView android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:text="@string/showing_details_of_parent"
+                                                     android:paddingStart="@dimen/padding_normal"
+                                                     android:paddingEnd="@dimen/padding_normal"
+                                                     android:paddingTop="@dimen/padding_normal"
+                                                     android:layout_gravity="center_horizontal"
+                                                     android:textAppearance="?textAppearanceBody2"/>
+
+            <io.codelabs.digitutor.view.widget.PreferenceView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/username"
+                    app:summary="@{user.name, default=Blessing}"
+                    app:icon="@drawable/twotone_account_circle_24px"/>
+
+            <io.codelabs.digitutor.view.widget.PreferenceView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/email_address"
+                    app:summary="@{user.email, default=blessingmail}"
+                    app:icon="@drawable/twotone_mail_outline_24px"/>
+
+            <io.codelabs.digitutor.view.widget.PreferenceView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/timestamp"
+                    app:summary="@{DateUtils.getRelativeTimeSpanString(request.timestamp, System.currentTimeMillis(),DateUtils.SECOND_IN_MILLIS).toString(), default=Morning}"
+                    app:icon="@drawable/twotone_calendar_today_24px"/>
+
+
+            <io.codelabs.digitutor.view.widget.PreferenceView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/wards"
+                    app:summary="@{String.valueOf(user.wards.size()), default=none}"
+                    app:icon="@drawable/twotone_supervisor_account_24px"/>
+
+            <io.codelabs.widget.ForegroundLinearLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_normal"
+                    android:layout_marginStart="@dimen/padding_normal"
+                    android:layout_marginEnd="@dimen/padding_normal">
+
+                <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
+                                                                   android:layout_height="wrap_content"
+                                                                   android:text="@string/decline_request"
+                                                                   android:textColor="@color/dribbble_dark"
+                                                                   app:iconTint="@color/dribbble_dark"
+                                                                   android:layout_marginEnd="@dimen/padding_normal"
+                                                                   android:onClick="declineRequest"
+                                                                   app:icon="@drawable/twotone_clear_24px"
+                                                                   style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+                <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
+                                                                   android:layout_height="wrap_content"
+                                                                   android:text="@string/accept_request"
+                                                                   android:onClick="acceptRequest"
+                                                                   android:layout_marginStart="@dimen/padding_normal"
+                                                                   app:icon="@drawable/twotone_done_24px"
+                                                                   style="@style/Widget.MaterialComponents.Button"/>
+
+            </io.codelabs.widget.ForegroundLinearLayout>
+
+        </io.codelabs.widget.ForegroundLinearLayout>
+
+    </io.codelabs.widget.ForegroundLinearLayout>
+</layout>

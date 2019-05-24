@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="io.codelabs.digitutor"
+    android:installLocation="auto">
+
+    <!-- Add permissions at runtime -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:name=".core.HomeTutorApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/home_tutor_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        tools:replace="android:label"
+        android:theme="@style/HomeTutorAppTheme">
+        <activity
+            android:name=".view.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/HomeTutorAppTheme.Main"
+            android:configChanges="orientation|screenLayout|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.HomeActivity"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name=".view.LoginActivity"
+            android:configChanges="orientation|screenLayout|screenSize"/>
+        <activity
+            android:name=".view.RegisterActivity"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name=".view.ResetPassword"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name=".view.kotlin.SearchActivity"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name=".view.RequestTutorActivity"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name=".view.AddWardActivity"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name=".view.kotlin.AssignmentActivity"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name=".view.kotlin.AddSubjectActivity"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name=".view.UserActivity"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity
+            android:name=".view.RequestDetailsActivity"
+            android:configChanges="orientation|screenLayout|screenSize" />
+        <activity android:name=".view.ComplaintActivity"/>
+        <activity android:name=".view.fragment.SchedulesActivity"/>
+        <activity android:name=".view.kotlin.FeedbackActivity"/>
+        <activity android:name=".view.kotlin.MakeComplaintActivity"/>
+
+        <service
+            android:name=".core.notification.AppMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/shr_logo" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/color_primary" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+    </application>
+
+</manifest>

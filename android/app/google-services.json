@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "155602660800",
+    "firebase_url": "https://house-teaching.firebaseio.com",
+    "project_id": "house-teaching",
+    "storage_bucket": "house-teaching.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155602660800:android:40e2a8555bbd49f1",
+        "android_client_info": {
+          "package_name": "io.codelabs.digitutor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155602660800-t7uhgtq0aa6ehrl71mp3e14oslqc22pd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.codelabs.digitutor",
+            "certificate_hash": "c11d545f2fb712fb89c3b8dfbc05873bb8658d8d"
+          }
+        },
+        {
+          "client_id": "155602660800-n58t83bnqghcqg0gpsausaakkmqb6h2c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX0DagAXm6hrdgtT4tsYio9-zGBH4pIxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155602660800-n58t83bnqghcqg0gpsausaakkmqb6h2c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

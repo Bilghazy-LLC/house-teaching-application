@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <io.codelabs.widget.ForegroundLinearLayout
+        android:id="@+id/container"
+        android:orientation="vertical"
+        tools:context=".view.kotlin.AddSubjectActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:id="@+id/app_bar"
+            style="?appBarLayoutStyle"
+            android:layout_height="@dimen/shot_collapsed_app_bar_height">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="exitUntilCollapsed|scroll"
+                app:title="@string/subjects"
+                app:contentScrim="@color/scrim"
+                android:id="@+id/collapsing_toolbar"
+                app:toolbarId="@id/toolbar">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/ic_back_light"
+                    android:id="@+id/toolbar" />
+
+                <ViewStub
+                    android:id="@+id/cab_stub"
+                    android:layout_width="match_parent"
+                    app:layout_collapseMode="pin"
+                    android:layout_height="?attr/actionBarSize" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/subjects_grid"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="outsideOverlay" />
+
+
+    </io.codelabs.widget.ForegroundLinearLayout>
+
+</layout>

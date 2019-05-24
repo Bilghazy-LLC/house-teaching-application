@@ -1,0 +1,47 @@
+<resources>
+    <string name="home_tutor_name">Home Tutor</string>
+    <string name="home_tutor_desc">A digital platform for finding private tutors</string>
+    <string name="close_drawer">close_drawer</string>
+    <string name="open_drawer">open_drawer</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="back_login">Back to login</string>
+    <string name="register">Join Now</string>
+    <string name="request_reset">Send request link</string>
+    <string name="password_reset_desc">Enter your email address below. A link will be sent to you shortly</string>
+    <string name="logout">Do you wish to logout?</string>
+    <string name="oops">Oops…</string>
+    <string name="not_found_text">Looks like we could not find what you were looking for…</string>
+    <string name="subjects">All Subjects</string>
+    <string name="selected_items_hint">Item Selected</string>
+    <string name="done">Done</string>
+    <string name="user_details">Details</string>
+    <string name="default_notification_channel_id">home_tutor_default_channel_id</string>
+    <string name="request_service">Request Service</string>
+    <string name="add_ward">Add my ward</string>
+    <string name="proceed">Proceed</string>
+    <string name="request_details">Request details</string>
+    <string name="timestamp">Time sent</string>
+    <string name="showing_details_of_parent">Showing details of Parent…</string>
+    <string name="wards">Ward(s)</string>
+    <string name="decline_request">Decline Request</string>
+    <string name="accept_request">Accept Request</string>
+    <string name="add_assignment">Add Assignment</string>
+    <string name="post_assignment">Post Assignment</string>
+    <string name="file_format_assignment">Specify details for this assignment <b>(.docx, .pdf files only)</b></string>
+    <string name="pick_file">Attach Assignment File</string>
+    <string name="select_ward">Select ward(s)</string>
+    <string name="comments">Comments</string>
+    <string name="refresh">Refresh</string>
+    <string name="complaints">Complaints</string>
+    <string name="complaint_header">Showing details for…</string>
+    <string name="schedules">Schedules</string>
+    <string name="returnUser">Dismiss</string>
+    <string name="make_complaint">Make a complaint</string>
+    <string name="complaint_desc">Kindly post a message to this tutor. He / She will get back to you soon. Thank you
+    </string>
+    <string name="send_complaint">Send message</string>
+</resources>

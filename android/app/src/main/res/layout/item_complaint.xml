@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:background="@color/background_card"
+                                                   android:foreground="?attr/selectableItemBackgroundBorderless"
+                                                   android:padding="@dimen/padding_normal">
+
+    <io.codelabs.widget.CircularImageView
+            android:layout_width="@dimen/avatar_bounds"
+            android:layout_height="@dimen/avatar_bounds"
+            android:src="@drawable/avatar_placeholder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/user_avatar"/>
+
+    <io.codelabs.widget.BaselineGridTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_name"
+            app:layout_constraintStart_toEndOf="@id/user_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:maxLines="1"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:ellipsize="end"
+            android:textColor="@color/text_primary_dark"
+            app:fontFamily="@font/nunito_semibold"
+            style="@style/TextAppearance.CommentAuthor"
+            android:textSize="16sp"
+            tools:text="@string/dummy_username"/>
+
+    <io.codelabs.widget.BaselineGridTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/complaint"
+            app:fontFamily="@font/nunito_semibold"
+            app:layout_constraintStart_toEndOf="@id/user_avatar"
+            app:layout_constraintTop_toBottomOf="@id/user_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            style="@style/TextAppearance.Comment"
+            android:textSize="16sp"
+            tools:text="@tools:sample/lorem/random"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

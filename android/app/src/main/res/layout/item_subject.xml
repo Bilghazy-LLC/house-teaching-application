@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.codelabs.widget.ForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_normal"
+    android:layout_width="match_parent"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_height="wrap_content">
+
+<!--    android:background="@color/background_card"-->
+
+    <io.codelabs.widget.BaselineGridTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="English Language"
+        android:textAppearance="?textAppearanceBody1"
+        android:textColor="@color/text_primary_dark"
+        android:id="@+id/subject_name" />
+
+    <io.codelabs.widget.BaselineGridTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        tools:text="This is a course studied in the Junior High School level to help students in improving their oral &amp; written skills in English."
+        android:textSize="14sp"
+        android:textAppearance="?textAppearanceBody2"
+        android:id="@+id/subject_desc" />
+
+</io.codelabs.widget.ForegroundLinearLayout>

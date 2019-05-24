@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.codelabs.widget.ForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/background_light"
+    android:paddingEnd="@dimen/padding_large"
+    android:paddingStart="@dimen/padding_large"
+    android:paddingTop="@dimen/padding_large">
+
+    <!--Profile Avatar-->
+    <io.codelabs.widget.CircularImageView
+        android:layout_width="@dimen/header_avatar"
+        android:layout_height="@dimen/header_avatar"
+        android:src="@drawable/ic_player"
+        android:id="@+id/header_avatar" />
+
+    <!--Username-->
+    <io.codelabs.widget.BaselineGridTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/dummy_username"
+        android:textAppearance="?textAppearanceBody2"
+        android:textSize="18sp"
+        android:id="@+id/header_username"
+        android:textColor="@color/text_primary_dark"
+        android:layout_marginTop="@dimen/spacing_normal" />
+
+    <!--User Type-->
+    <io.codelabs.widget.BaselineGridTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Logged in as: Parent"
+        android:textAppearance="?textAppearanceBody2"
+        android:textSize="16sp"
+        android:id="@+id/header_user_type"
+        android:textColor="@color/text_tertiary_dark" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:background="@color/divider" />
+
+</io.codelabs.widget.ForegroundLinearLayout>

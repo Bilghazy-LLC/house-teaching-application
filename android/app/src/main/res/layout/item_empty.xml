@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.codelabs.widget.ForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                           android:orientation="vertical"
+                                           android:gravity="center"
+                                           android:background="@color/white"
+                                           android:layout_width="match_parent"
+                                           android:padding="@dimen/padding_large"
+                                           android:layout_height="match_parent">
+
+    <com.facebook.shimmer.ShimmerFrameLayout android:layout_width="match_parent"
+                                             android:id="@+id/empty_shimmer"
+                                             android:layout_height="wrap_content">
+
+        <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:orientation="vertical">
+
+            <io.codelabs.widget.ForegroundImageView android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/avatar_size"
+                                                    android:src="@color/mid_grey"/>
+
+            <io.codelabs.widget.ForegroundImageView android:layout_width="250dp"
+                                                    android:layout_gravity="start|center_vertical"
+                                                    android:layout_marginTop="@dimen/spacing_micro"
+                                                    android:layout_height="@dimen/avatar_size"
+                                                    android:src="@color/mid_grey"/>
+
+            <io.codelabs.widget.ForegroundImageView android:layout_width="100dp"
+                                                    android:layout_gravity="start|center_vertical"
+                                                    android:layout_marginTop="@dimen/spacing_micro"
+                                                    android:layout_height="@dimen/avatar_size"
+                                                    android:src="@color/mid_grey"/>
+
+        </io.codelabs.widget.ForegroundLinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <io.codelabs.widget.BaselineGridTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="@dimen/padding_normal"
+            android:paddingEnd="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/padding_large"
+            android:textAppearance="?textAppearanceHeadline5"
+            android:text="@string/oops"/>
+
+    <io.codelabs.widget.BaselineGridTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="@dimen/padding_normal"
+            android:paddingEnd="@dimen/padding_normal"
+            android:textAppearance="?textAppearanceBody2"
+            android:text="@string/not_found_text"/>
+
+</io.codelabs.widget.ForegroundLinearLayout>

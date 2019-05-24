@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="timetable" type="io.codelabs.digitutor.data.model.Timetable"/>
+        <variable name="subject" type="io.codelabs.digitutor.data.model.Subject"/>
+        <import type="android.text.format.DateUtils"/>
+        <variable name="context" type="android.content.Context"/>
+    </data>
+    <com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content"
+                                                       android:layout_margin="@dimen/spacing_micro">
+
+
+        <io.codelabs.widget.ForegroundLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <io.codelabs.widget.BaselineGridTextView android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:paddingStart="@dimen/padding_normal"
+                                                     android:paddingEnd="@dimen/padding_normal"
+                                                     android:paddingTop="@dimen/padding_normal"
+                                                     android:textAppearance="?textAppearanceBody1"
+                                                     android:textSize="18sp"
+                                                     android:maxLines="1"
+                                                     android:ellipsize="end"
+                                                     android:text="@{subject.name, default=`English language`}"/>
+
+            <io.codelabs.digitutor.view.widget.PreferenceView android:layout_width="match_parent"
+                                                              android:layout_height="wrap_content"
+                                                              app:title="Day &amp; Time"
+                                                              app:icon="@drawable/twotone_event_24px"
+                                                              app:summary="@{DateUtils.getRelativeDateTimeString(context,timetable.day.time,DateUtils.SECOND_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_SHOW_TIME).toString(), default=`8am`}"/>
+
+        </io.codelabs.widget.ForegroundLinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

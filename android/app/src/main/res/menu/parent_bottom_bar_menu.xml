@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_search"
+        android:title="@string/search"
+        app:showAsAction="always"
+        android:icon="@drawable/twotone_search_24px" />
+
+
+    <item
+        android:title="Make Complaints"
+        app:showAsAction="never"
+        android:visible="false"
+        android:id="@+id/menu_make_complaints"
+        android:icon="@drawable/twotone_book_24px" />
+
+    <item
+        android:id="@+id/menu_tutor_feedback"
+        android:title="Tutor Feedback"
+        app:showAsAction="never"
+        android:icon="@drawable/twotone_receipt_24px" />
+
+    <item
+        android:id="@+id/menu_view_timetable"
+        android:title="View Timetable"
+        app:showAsAction="never"
+        android:icon="@drawable/twotone_calendar_today_24px" />
+
+</menu>

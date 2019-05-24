@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="isTutor" type="Boolean"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".view.fragment.SchedulesActivity">
+
+        <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/app_bar"
+                    style="?appBarLayoutStyle"
+                    android:layout_height="@dimen/shot_collapsed_app_bar_height">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_scrollFlags="exitUntilCollapsed|scroll"
+                        app:title="@string/schedules"
+                        app:contentScrim="@color/scrim"
+                        android:id="@+id/collapsing_toolbar"
+                        app:toolbarId="@id/toolbar">
+
+                    <androidx.appcompat.widget.Toolbar
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            app:layout_collapseMode="pin"
+                            app:navigationIcon="@drawable/ic_back_light"
+                            android:id="@+id/toolbar"/>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+                                                       android:layout_height="0dp"
+                                                       android:layout_weight="1"
+                                                       android:id="@+id/schedules_grid"
+                                                       tools:itemCount="20"
+                                                       tools:listitem="@layout/item_schedule"
+                                                       android:scrollbars="none"/>
+
+        </io.codelabs.widget.ForegroundLinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/twotone_event_24px"
+                android:id="@+id/fab"
+                android:visibility="@{isTutor ? View.VISIBLE : View.GONE}"
+                android:layout_margin="@dimen/fab_margin"
+                android:onClick="pickSchedule"
+                android:layout_gravity="bottom|end"
+                app:layout_anchor="@id/bottom_app_bar"/>
+
+    </FrameLayout>
+</layout>

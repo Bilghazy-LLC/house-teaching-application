@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="schedule" type="io.codelabs.digitutor.data.model.Schedule"/>
+        <variable name="subject" type="io.codelabs.digitutor.data.model.Subject"/>
+        <import type="android.text.format.DateUtils"/>
+    </data>
+    <com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content"
+                                                       android:layout_margin="@dimen/spacing_micro">
+
+
+        <io.codelabs.widget.ForegroundLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <io.codelabs.widget.BaselineGridTextView android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:textColor="@color/text_primary_dark"
+                                                     app:fontFamily="@font/nunito_semibold"
+                                                     android:paddingStart="@dimen/padding_normal"
+                                                     android:paddingEnd="@dimen/padding_normal"
+                                                     android:paddingTop="@dimen/padding_normal"
+                                                     android:textAppearance="?textAppearanceBody2"
+                                                     android:textSize="18sp"
+                                                     android:maxLines="1"
+                                                     android:ellipsize="end"
+                                                     android:text="@{subject.name, default=`English language`}"/>
+
+            <io.codelabs.digitutor.view.widget.PreferenceView android:layout_width="match_parent"
+                                                              android:layout_height="wrap_content"
+                                                              app:title="Start Time"
+                                                              app:icon="@drawable/twotone_event_24px"
+                                                              app:summary="@{DateUtils.getRelativeTimeSpanString(schedule.startTime, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString(), default=`8am`}"/>
+
+
+            <io.codelabs.digitutor.view.widget.PreferenceView android:layout_width="match_parent"
+                                                              android:layout_height="wrap_content"
+                                                              app:title="End Time"
+                                                              app:icon="@drawable/twotone_calendar_today_24px"
+                                                              app:summary="@{DateUtils.getRelativeTimeSpanString(schedule.endTime, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString(), default=`12pm`}"/>
+
+        </io.codelabs.widget.ForegroundLinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

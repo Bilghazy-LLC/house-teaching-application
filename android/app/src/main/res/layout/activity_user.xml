@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="io.codelabs.digitutor.data.BaseUser" />
+
+        <import type="android.view.View" />
+
+        <import type="io.codelabs.digitutor.core.util.Constants" />
+
+        <variable
+            name="user"
+            type="io.codelabs.digitutor.data.BaseUser" />
+    </data>
+
+    <io.codelabs.widget.ForegroundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container"
+        android:background="@color/background_card"
+        android:orientation="vertical"
+        tools:context=".view.UserActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:id="@+id/app_bar"
+            style="?appBarLayoutStyle"
+            android:layout_height="@dimen/shot_collapsed_app_bar_height">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="exitUntilCollapsed|scroll"
+                app:title="@string/user_details"
+                app:contentScrim="@color/scrim"
+                android:id="@+id/collapsing_toolbar"
+                app:toolbarId="@id/toolbar">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/ic_back_light"
+                    android:id="@+id/toolbar" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <io.codelabs.widget.ForegroundLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/padding_large"
+                android:orientation="vertical">
+
+                <io.codelabs.widget.ForegroundImageView
+                    android:layout_width="@dimen/large_avatar_size"
+                    android:layout_height="@dimen/large_avatar_size"
+                    app:imageUrl="@{user.avatar == null ? Constants.DEFAULT_AVATAR_URL : user.avatar}"
+                    app:error="@{@drawable/avatar_placeholder}"
+                    tools:src="@drawable/avatar_placeholder"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/user_avatar" />
+
+                <io.codelabs.widget.BaselineGridTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    tools:text="@string/dummy_username"
+                    android:text="@{user.name}"
+                    android:id="@+id/user_name"
+                    android:textAppearance="@style/TextAppearance.CommentAuthor"
+                    android:textColor="@color/text_primary_dark"
+                    android:padding="@dimen/spacing_normal"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:background="@color/divider" />
+
+                <io.codelabs.widget.BaselineGridTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_tertiary_dark"
+                    android:textAppearance="@style/TextAppearance.Comment"
+                    android:text="@string/email_address" />
+
+                <io.codelabs.widget.BaselineGridTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Comment"
+                    android:text="@{user.email}"
+                    tools:text="@string/dummy_email" />
+
+                <io.codelabs.widget.ForegroundLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:id="@+id/tutor_content">
+
+                    <io.codelabs.widget.BaselineGridTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_tertiary_dark"
+                        android:textAppearance="@style/TextAppearance.Comment"
+                        android:text="@string/subjects" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_marginTop="@dimen/spacing_micro"
+                        tools:listitem="@layout/item_subject"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:id="@+id/subjects_grid"
+                        tools:itemCount="3" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:onClick="requestService"
+                        android:enabled="false"
+                        android:id="@+id/request_button"
+                        android:text="@string/request_service" />
+
+                </io.codelabs.widget.ForegroundLinearLayout>
+
+
+            </io.codelabs.widget.ForegroundLinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </io.codelabs.widget.ForegroundLinearLayout>
+</layout>
