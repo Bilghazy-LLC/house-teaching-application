@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "694351652691-nk4mjidn8vfalp82kkrld3i4j03denrs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.codelabs.digitutor",
+            "certificate_hash": "c11d545f2fb712fb89c3b8dfbc05873bb8658d8d"
+          }
+        },
+        {
           "client_id": "694351652691-049kbm8nghougj2a6he9ncdjkkqui6tv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
