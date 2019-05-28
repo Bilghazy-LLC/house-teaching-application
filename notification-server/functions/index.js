@@ -193,11 +193,11 @@ exports.wardAssignment = functions.firestore.document('tutors/{tutorId}/assignme
 
     var parent = change.data().ward;
     console.log(`Parent UID: ${parent}`);
-    
+
     if (parent) {
         return admin.firestore().doc(`parents/${parent}`).get().then(snapshot => {
             console.log(snapshot.data());
-            
+
             if (snapshot.exists) {
                 var parentInfo = snapshot.data();
 
