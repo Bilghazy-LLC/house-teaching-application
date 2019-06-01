@@ -9,6 +9,7 @@
 
     <com.facebook.shimmer.ShimmerFrameLayout android:layout_width="match_parent"
                                              android:id="@+id/empty_shimmer"
+                                             android:visibility="gone"
                                              android:layout_height="wrap_content">
 
         <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
@@ -51,6 +52,7 @@
             android:gravity="center"
             android:paddingStart="@dimen/padding_normal"
             android:paddingEnd="@dimen/padding_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
             android:textAppearance="?textAppearanceBody2"
             android:text="@string/not_found_text"/>
 

@@ -13,8 +13,8 @@
     <string name="request_reset">Send request link</string>
     <string name="password_reset_desc">Enter your email address below. A link will be sent to you shortly</string>
     <string name="logout">Do you wish to logout?</string>
-    <string name="oops">Oops…</string>
-    <string name="not_found_text">Looks like we could not find what you were looking for…</string>
+    <string name="oops">Fetching data…</string>
+    <string name="not_found_text">This will only take a moment or two</string>
     <string name="subjects">All Subjects</string>
     <string name="selected_items_hint">Item Selected</string>
     <string name="done">Done</string>
