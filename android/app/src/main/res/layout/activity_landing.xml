@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <io.codelabs.widget.ForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                            xmlns:tools="http://schemas.android.com/tools"
+                                           xmlns:app="http://schemas.android.com/apk/res-auto"
                                            android:orientation="vertical"
                                            android:layout_width="match_parent"
                                            android:layout_height="match_parent"
                                            tools:context=".view.kotlin.LandingActivity"
-                                           android:gravity="center"
                                            android:background="@color/color_image_background"
-                                           android:padding="@dimen/padding_large"
                                            android:id="@+id/container">
+
 
     <io.codelabs.widget.ForegroundImageView
             android:layout_width="@dimen/match_parent"
             android:layout_height="@dimen/nav_header_height"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_xlarge"
             android:src="@drawable/shrine"/>
 
 
@@ -23,6 +25,7 @@
             android:paddingTop="@dimen/padding_normal"
             android:paddingStart="@dimen/padding_normal"
             android:paddingEnd="@dimen/padding_normal"
+            android:layout_gravity="center"
             android:textAppearance="?textAppearanceHeadline5"/>
 
     <io.codelabs.widget.BaselineGridTextView
@@ -32,6 +35,7 @@
             android:text="@string/search_prompt"
             android:paddingStart="@dimen/padding_normal"
             android:paddingEnd="@dimen/padding_normal"
+            android:layout_gravity="center"
             android:textAppearance="?textAppearanceBody2"/>
 
     <com.google.android.material.button.MaterialButton
@@ -39,6 +43,9 @@
             android:layout_height="wrap_content"
             android:text="Search Subject"
             android:padding="@dimen/padding_large"
+            android:layout_marginEnd="@dimen/padding_large"
+            android:layout_marginStart="@dimen/padding_large"
+            android:layout_gravity="center"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_marginTop="@dimen/spacing_large"
             android:onClick="searchSubject"/>
@@ -47,8 +54,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Search Tutor"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/padding_large"
+            android:layout_marginStart="@dimen/padding_large"
             android:padding="@dimen/padding_large"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:onClick="searchTutor"/>
+
+    <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
+                                                       android:layout_height="wrap_content"
+                                                       app:icon="@drawable/twotone_home_24px"
+                                                       android:text="Visit Home Page"
+                                                       style="@style/Widget.MaterialComponents.Button"
+                                                       android:layout_marginTop="@dimen/spacing_xlarge"
+                                                       android:layout_gravity="center"
+                                                       android:onClick="navHome"/>
 
 </io.codelabs.widget.ForegroundLinearLayout>

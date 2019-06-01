@@ -297,8 +297,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.menu_home:
                 if (BaseUser.Type.PARENT.equals(prefs.getType())) {
+                    binding.toolbar.setTitle(getString(R.string.tutors));
                     addFragment(new TutorsFragment());
                 } else {
+                    binding.toolbar.setTitle(getString(R.string.clients));
                     addFragment(new ClientsFragment());
                 }
                 break;
