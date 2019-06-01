@@ -21,7 +21,7 @@
     <string name="user_details">Details</string>
     <string name="default_notification_channel_id">home_tutor_default_channel_id</string>
     <string name="request_service">Request Service</string>
-    <string name="add_ward">Add my ward</string>
+    <string name="add_ward">Add ward</string>
     <string name="proceed">Proceed</string>
     <string name="request_details">Request details</string>
     <string name="timestamp">Time sent</string>
