@@ -1,64 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable name="isLoggedIn" type="Boolean"/>
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:openDrawer="start"
-        android:id="@+id/drawer"
-        tools:context=".view.HomeActivity">
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/content">
+            tools:openDrawer="start"
+            android:id="@+id/drawer"
+            tools:context=".view.HomeActivity">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/content">
+
+            <androidx.appcompat.widget.Toolbar android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               app:title="@string/home_tutor_name"
+                                               style="?toolbarStyle"
+                                               android:id="@+id/toolbar"/>
 
             <!-- Frame Layout: For fragments-->
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/frame"
-                android:layout_marginBottom="?attr/actionBarSize" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/frame"
+                    android:layout_marginTop="?attr/actionBarSize"
+                    android:layout_marginBottom="?attr/actionBarSize"/>
 
             <!-- Bottom App Bar-->
             <com.google.android.material.bottomappbar.BottomAppBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                app:backgroundTint="?colorPrimaryDark"
-                app:fabAlignmentMode="center"
-                app:hideOnScroll="true"
-                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-                app:elevation="@dimen/z_app_bar"
-                android:id="@+id/bottom_app_bar" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    app:backgroundTint="?colorPrimaryDark"
+                    app:fabAlignmentMode="center"
+                    app:hideOnScroll="true"
+                    android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
+                    app:elevation="@dimen/z_app_bar"
+                    android:id="@+id/bottom_app_bar"/>
 
             <!-- FAB-->
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add_light"
-                android:id="@+id/fab"
-                app:layout_anchor="@id/bottom_app_bar" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_light"
+                    android:id="@+id/fab"
+                    app:layout_anchor="@id/bottom_app_bar"/>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <!-- Navigation View-->
         <com.google.android.material.navigation.NavigationView
-            android:layout_width="@dimen/navigation_drawer_width"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:menu="@menu/drawer_menu"
-            app:itemIconPadding="@dimen/padding_normal"
-            app:elevation="@dimen/z_drawer"
-            app:headerLayout="@layout/header_layout"
-            android:id="@+id/nav_view" />
+                android:layout_width="@dimen/navigation_drawer_width"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                app:menu="@menu/drawer_menu"
+                app:itemIconPadding="@dimen/padding_normal"
+                app:elevation="@dimen/z_drawer"
+                app:headerLayout="@layout/header_layout"
+                android:id="@+id/nav_view"/>
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
