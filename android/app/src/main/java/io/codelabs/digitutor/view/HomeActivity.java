@@ -209,12 +209,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private void showDialog() {
         AlertDialog dialog = new MaterialAlertDialogBuilder(this).setTitle("Almost done...")
                 .setMessage("The final step here is for you to add at least one ward. Tap ok to get started.")
-                .setCancelable(false)
+                .setCancelable(true)
                 .setPositiveButton("Add ward", (dialog1, which) -> {
                     dialog1.dismiss();
                     intentTo(AddWardActivity.class);
                 })
-//                .setNegativeButton("Dismiss", (dialog1, which) -> dialog1.dismiss())
+                .setNegativeButton("Dismiss", (dialog1, which) -> dialog1.dismiss())
                 .create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
