@@ -10,18 +10,22 @@ import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
+import com.google.android.gms.tasks.Tasks
 import io.codelabs.digitutor.R
 import io.codelabs.digitutor.core.base.BaseActivity
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource
 import io.codelabs.digitutor.core.util.AsyncCallback
+import io.codelabs.digitutor.core.util.Constants
 import io.codelabs.digitutor.core.util.OnClickListener
 import io.codelabs.digitutor.data.BaseDataModel
 import io.codelabs.digitutor.data.BaseUser
 import io.codelabs.digitutor.data.model.Complaint
 import io.codelabs.digitutor.data.model.Subject
+import io.codelabs.digitutor.data.model.Tutor
 import io.codelabs.digitutor.databinding.ActivitySearchBinding
 import io.codelabs.digitutor.view.UserActivity
 import io.codelabs.digitutor.view.adapter.SearchAdapter
@@ -39,10 +43,6 @@ class SearchActivity : BaseActivity(), OnClickListener<BaseDataModel> {
 
     // Get the data binding class
     private lateinit var binding: ActivitySearchBinding
-//    private val job: Job = Job()
-//    val ioScope = CoroutineScope(job + Dispatchers.IO)
-//    private val uiScope = CoroutineScope(job + Dispatchers.Main)
-
     private lateinit var adapter: SearchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,8 +87,34 @@ class SearchActivity : BaseActivity(), OnClickListener<BaseDataModel> {
                 return true
             }
         })
-
         onNewIntent(intent)
+
+        when {
+            intent.hasExtra(SEARCH_SUBJECT) -> {
+                ioScope.launch {
+                    val subjects =
+                        Tasks.await(firestore.collection(Constants.SUBJECTS).get()).toObjects(Subject::class.java)
+                    debugLog(subjects)
+                    uiScope.launch {
+                        binding.loading.visibility = View.GONE
+                        binding.searchResults.visibility = View.VISIBLE
+                        adapter.addData(subjects)
+                    }
+                }
+            }
+
+            intent.hasExtra(SEARCH_TUTOR) -> {
+                ioScope.launch {
+                    val tutors = Tasks.await(firestore.collection(Constants.TUTORS).get()).toObjects(Tutor::class.java)
+                    debugLog(tutors)
+                    uiScope.launch {
+                        binding.loading.visibility = View.GONE
+                        binding.searchResults.visibility = View.VISIBLE
+                        adapter.addData(tutors)
+                    }
+                }
+            }
+        }
     }
 
     private fun searchFor(query: String) {
@@ -108,7 +134,12 @@ class SearchActivity : BaseActivity(), OnClickListener<BaseDataModel> {
                         debugLog(response)
                         binding.loading.visibility = View.GONE
                         binding.searchResults.visibility = View.VISIBLE
-                        adapter.addData(response)
+
+                        when {
+                            intent.hasExtra(SEARCH_SUBJECT) -> adapter.addData(response?.filter { it is Subject })
+                            intent.hasExtra(SEARCH_TUTOR) -> adapter.addData(response?.filter { it is Tutor })
+                            else -> adapter.addData(response)
+                        }
                     }
                 }
 
@@ -120,6 +151,7 @@ class SearchActivity : BaseActivity(), OnClickListener<BaseDataModel> {
     }
 
     override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
         if (intent != null && intent.hasExtra(SearchManager.QUERY)) {
             val query = intent.getStringExtra(SearchManager.QUERY)
             if (query.isNotEmpty()) {
@@ -164,7 +196,11 @@ class SearchActivity : BaseActivity(), OnClickListener<BaseDataModel> {
                 }
 
                 is Subject -> {
-
+                    intentTo(
+                        TutorsActivity::class.java,
+                        bundleOf(Pair<String, Any>(TutorsActivity.SUBJECT_QUERY, item.name)),
+                        false
+                    )
                 }
 
                 is Complaint -> {
@@ -172,5 +208,10 @@ class SearchActivity : BaseActivity(), OnClickListener<BaseDataModel> {
                 }
             }
         }
+    }
+
+    companion object {
+        const val SEARCH_SUBJECT = "search_subject"
+        const val SEARCH_TUTOR = "search_tutor"
     }
 }

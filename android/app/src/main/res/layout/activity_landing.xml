@@ -4,15 +4,16 @@
                                            android:orientation="vertical"
                                            android:layout_width="match_parent"
                                            android:layout_height="match_parent"
-                                           tools:context=".view.LandingActivity"
+                                           tools:context=".view.kotlin.LandingActivity"
                                            android:gravity="center"
+                                           android:background="@color/color_image_background"
                                            android:padding="@dimen/padding_large"
                                            android:id="@+id/container">
 
     <io.codelabs.widget.ForegroundImageView
-            android:layout_width="@dimen/large_avatar_size"
-            android:layout_height="@dimen/large_avatar_size"
-            android:src="@drawable/shr_logo"/>
+            android:layout_width="@dimen/match_parent"
+            android:layout_height="@dimen/nav_header_height"
+            android:src="@drawable/shrine"/>
 
 
     <io.codelabs.widget.BaselineGridTextView

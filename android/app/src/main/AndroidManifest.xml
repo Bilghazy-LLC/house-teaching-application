@@ -69,7 +69,8 @@
         <activity android:name=".view.fragment.SchedulesActivity"/>
         <activity android:name=".view.kotlin.FeedbackActivity"/>
         <activity android:name=".view.kotlin.MakeComplaintActivity"/>
-        <activity android:name=".view.LandingActivity"/>
+        <activity android:name=".view.kotlin.LandingActivity"/>
+        <activity android:name=".view.kotlin.TutorsActivity"/>
 
         <service
             android:name=".core.notification.AppMessagingService"

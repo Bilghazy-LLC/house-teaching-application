@@ -13,7 +13,9 @@ public interface AsyncCallback<Type> {
 
     void onSuccess(@Nullable Type response);
 
-    void onStart();
+    default void onStart() {
+    }
 
-    void onComplete();
+    default void onComplete() {
+    }
 }

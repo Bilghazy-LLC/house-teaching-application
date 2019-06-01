@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import io.codelabs.digitutor.R;
 import io.codelabs.digitutor.core.base.BaseActivity;
 import io.codelabs.digitutor.data.BaseUser;
+import io.codelabs.digitutor.view.kotlin.LandingActivity;
 
 public class MainActivity extends BaseActivity {
     private String type;
