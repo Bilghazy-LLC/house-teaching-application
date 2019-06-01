@@ -185,6 +185,53 @@ exports.notifyRequest = functions.firestore.document('requests/{requestId}').onW
         })
 });
 
+exports.notifyComplaint = functions.firestore.document('complaints/{complaintKey}').onWrite((change, context) => {
+    // Extract the user's ID
+    var complaintKey = context.params.complaintKey ? context.params.complaintKey : change.id;
+    var data = change.before.data();
+
+    // Get the parent and the tutor
+    var parent = data.parent;
+    var tutor = data.tutor;
+
+    // Get the parent's device token and send a notification to their device
+    // Get parent's information
+    admin.firestore().collection('tutors').doc(tutor)
+        .get().then(querySnapshot => {
+            if (querySnapshot.exists) {
+                var tutorData = querySnapshot.data();
+                var deviceToken = tutorData.token;
+
+                admin.messaging().sendToDevice(deviceToken, {
+                    data: {
+                        key: complaintKey,
+                        tutor: snapshot.data().key,
+                        parent: parent,
+                        description: data.description,
+                        timestamp: data.timestamp.toString(),
+                        title: `Complaint received`,
+                        message: 'Your request for service was accepted',
+                        createdAt: `${new Date().getTime()}`,
+                        updatedAt: `${data.timestamp}`,
+                        type: 'parent-complaint'
+                    }
+                }).then(response => {
+                    return console.log('Notification sent to tutor successfully');
+                }).catch(err => {
+                    if (err) {
+                        return console.log(err);
+                    }
+                })
+            } else {
+                return console.log("Unable to get the parent.", parent);
+            }
+        }).catch(error => {
+            if (error) {
+                return console.log(error);
+            }
+        })
+});
+
 // 
 exports.wardAssignment = functions.firestore.document('tutors/{tutorId}/assignments/{assignmentId}').onCreate((change, context) => {
     // Get params from the context

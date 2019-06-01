@@ -11,6 +11,8 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import io.codelabs.digitutor.R;
+import io.codelabs.digitutor.data.model.Complaint;
+import io.codelabs.digitutor.view.ComplaintActivity;
 import io.codelabs.digitutor.view.HomeActivity;
 import io.codelabs.digitutor.view.RequestDetailsActivity;
 import io.codelabs.digitutor.view.kotlin.FeedbackActivity;
@@ -32,6 +34,7 @@ public class AppMessagingService extends FirebaseMessagingService {
     public static final String TYPE_REQUEST = "tutor-request";
     public static final String TYPE_FEEDBACK = "tutor-feedback";
     public static final String TYPE_ASSIGNMENT = "ward-assignment";
+    public static final String TYPE_COMPLAINT = "parent-complaint";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -64,9 +67,20 @@ public class AppMessagingService extends FirebaseMessagingService {
 
                 case TYPE_ASSIGNMENT:
                     Intent assignmentIntent = new Intent(getApplicationContext(), HomeActivity.class);
-
                     // Send notification to device
                     pushNotification(data.get("title"), data.get("message"), assignmentIntent);
+                    break;
+
+                case TYPE_COMPLAINT:
+                    Intent complaintIntent = new Intent(getApplicationContext(), ComplaintActivity.class);
+                    try {
+                        complaintIntent.putExtra(ComplaintActivity.EXTRA_COMPLAINT, new Complaint(data.get("key"), data.get("parent"), data.get("tutor")
+                                , data.get("description"), Long.parseLong(data.get("timestamp"))));
+                        // Send notification to device
+                        pushNotification(data.get("title"), data.get("message"), complaintIntent);
+                    } catch (NumberFormatException e) {
+                        ExtensionUtils.debugLog(this, e.getLocalizedMessage());
+                    }
                     break;
             }
 
