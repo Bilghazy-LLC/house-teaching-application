@@ -2,10 +2,8 @@ package io.codelabs.digitutor.view;
 
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-
 import io.codelabs.digitutor.R;
 import io.codelabs.digitutor.core.base.BaseActivity;
 import io.codelabs.digitutor.data.BaseUser;
@@ -22,7 +20,7 @@ public class MainActivity extends BaseActivity {
 
     public void showLoginDialog(View view) {
         if (prefs.isLoggedIn()) {
-            intentTo(LandingActivity.class, true);
+            intentTo(prefs.getType().equals(BaseUser.Type.PARENT) ? LandingActivity.class : HomeActivity.class, true);
             return;
         }
 
