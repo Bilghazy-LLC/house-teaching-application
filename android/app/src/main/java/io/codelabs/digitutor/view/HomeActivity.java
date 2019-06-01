@@ -11,10 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -24,6 +26,7 @@ import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource;
 import io.codelabs.digitutor.core.util.AsyncCallback;
 import io.codelabs.digitutor.core.util.Constants;
 import io.codelabs.digitutor.data.BaseUser;
+import io.codelabs.digitutor.data.model.Parent;
 import io.codelabs.digitutor.databinding.ActivityHomeBinding;
 import io.codelabs.digitutor.view.fragment.*;
 import io.codelabs.digitutor.view.kotlin.AddSubjectActivity;
@@ -80,6 +83,30 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 sendRegistrationToServer(token);
             } else {
                 ExtensionUtils.debugLog(getApplicationContext(), "Token could not be retrieved");
+            }
+        });
+
+        FirebaseDataSource.getCurrentUser(this, firestore, prefs, new AsyncCallback<BaseUser>() {
+            @Override
+            public void onError(@Nullable String error) {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable BaseUser response) {
+                if (response instanceof Parent) {
+                    if (((Parent) response).getWards().isEmpty()) showDialog();
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }
@@ -178,10 +205,27 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         }, 1500);
     }
 
+    private void showDialog() {
+        AlertDialog dialog = new MaterialAlertDialogBuilder(this).setTitle("Almost done...")
+                .setMessage("The final step here is for you to add at least one ward. Tap ok to get started.")
+                .setCancelable(false)
+                .setPositiveButton("Add ward", (dialog1, which) -> {
+                    dialog1.dismiss();
+                    intentTo(AddWardActivity.class);
+                })
+//                .setNegativeButton("Dismiss", (dialog1, which) -> dialog1.dismiss())
+                .create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         if (prefs.isLoggedIn()) {
+
             FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     ExtensionUtils.debugLog(HomeActivity.this, task.getResult() != null ? task.getResult().getToken() : "Token was null");

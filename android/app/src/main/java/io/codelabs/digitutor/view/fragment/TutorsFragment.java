@@ -63,47 +63,6 @@ public class TutorsFragment extends Fragment {
         loadDataFromDatabase();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        FirebaseDataSource.getUser(requireActivity(), ((BaseActivity) requireActivity()).firestore,
-                ((BaseActivity) requireActivity()).prefs.getKey(), ((BaseActivity) requireActivity()).prefs.getType(), new AsyncCallback<BaseUser>() {
-                    @Override
-                    public void onError(@Nullable String error) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(@Nullable BaseUser response) {
-                        if (response instanceof Parent) {
-                            if (((Parent) response).getWards().isEmpty()) showDialog();
-                        }
-                    }
-
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-    }
-
-    private void showDialog() {
-        AlertDialog dialog = new MaterialAlertDialogBuilder(requireActivity()).setTitle("Almost done...")
-                .setMessage("The final step here is for you to add at least one ward. Tap ok to get started.")
-                .setCancelable(false)
-                .create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-
-    }
-
     private void loadDataFromDatabase() {
         try {
             FirebaseDataSource.getAllTutors(requireActivity(),
