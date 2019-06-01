@@ -67,7 +67,7 @@ dependencies {
     // Authentication
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     // Database
-    implementation 'com.google.firebase:firebase-firestore:19.0.0'
+    implementation 'com.google.firebase:firebase-firestore:19.0.1'
     // Storage
     implementation 'com.google.firebase:firebase-storage:17.0.0'
 
@@ -78,7 +78,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
 
     // Codelabs
-    implementation 'com.github.Quabynah-Codelabs.quabynah-codelabs-sdk:sdk-library:v1.3.5.3'
+    implementation 'com.github.Quabynah-Codelabs.quabynah-codelabs-sdk:sdk-library:v1.3.5.8'
 
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.4.0'
