@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="login_options">
-        <item>Parent</item>
+        <item>Parent/Ward</item>
         <item>Tutor</item>
 <!--        <item>Ward</item>-->
     </string-array>
