@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.codelabs.widget.ForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                           xmlns:tools="http://schemas.android.com/tools"
+                                           android:orientation="vertical"
+                                           android:layout_width="match_parent"
+                                           android:layout_height="match_parent"
+                                           tools:context=".view.LandingActivity"
+                                           android:gravity="center"
+                                           android:padding="@dimen/padding_large"
+                                           android:id="@+id/container">
+
+    <io.codelabs.widget.ForegroundImageView
+            android:layout_width="@dimen/large_avatar_size"
+            android:layout_height="@dimen/large_avatar_size"
+            android:src="@drawable/shr_logo"/>
+
+
+    <io.codelabs.widget.BaselineGridTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_tutor_name"
+            android:paddingTop="@dimen/padding_normal"
+            android:paddingStart="@dimen/padding_normal"
+            android:paddingEnd="@dimen/padding_normal"
+            android:textAppearance="?textAppearanceHeadline5"/>
+
+    <io.codelabs.widget.BaselineGridTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:text="@string/search_prompt"
+            android:paddingStart="@dimen/padding_normal"
+            android:paddingEnd="@dimen/padding_normal"
+            android:textAppearance="?textAppearanceBody2"/>
+
+    <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search Subject"
+            android:padding="@dimen/padding_large"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:onClick="searchSubject"/>
+
+    <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search Tutor"
+            android:padding="@dimen/padding_large"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:onClick="searchTutor"/>
+
+</io.codelabs.widget.ForegroundLinearLayout>

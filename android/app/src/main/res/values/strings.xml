@@ -31,7 +31,9 @@
     <string name="accept_request">Accept Request</string>
     <string name="add_assignment">Add Assignment</string>
     <string name="post_assignment">Post Assignment</string>
-    <string name="file_format_assignment">Specify details for this assignment <b>(.docx, .pdf files only)</b></string>
+    <string name="file_format_assignment">Specify details for this assignment
+        <b>(.docx, .pdf files only)</b>
+    </string>
     <string name="pick_file">Attach Assignment File</string>
     <string name="select_ward">Select ward(s)</string>
     <string name="comments">Comments</string>
@@ -49,4 +51,5 @@
     <string name="timetable">Timetable</string>
     <string name="tutors">All tutors</string>
     <string name="clients">All parents</string>
+    <string name="search_prompt">Search tutors &amp; Subjects from here</string>
 </resources>

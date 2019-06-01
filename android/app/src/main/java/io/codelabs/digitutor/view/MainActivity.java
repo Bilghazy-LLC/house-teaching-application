@@ -21,7 +21,7 @@ public class MainActivity extends BaseActivity {
 
     public void showLoginDialog(View view) {
         if (prefs.isLoggedIn()) {
-            intentTo(HomeActivity.class, true);
+            intentTo(LandingActivity.class, true);
             return;
         }
 

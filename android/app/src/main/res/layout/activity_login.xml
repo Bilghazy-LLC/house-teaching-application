@@ -108,6 +108,7 @@
                     android:id="@+id/forgot_password"
                     android:layout_marginEnd="@dimen/spacing_normal"
                     android:text="@string/forgot_password"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:onClick="resetPassword"
                     android:layout_gravity="start" />
 
