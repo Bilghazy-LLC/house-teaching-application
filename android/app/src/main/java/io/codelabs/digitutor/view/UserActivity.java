@@ -17,8 +17,10 @@ import io.codelabs.digitutor.core.util.AsyncCallback;
 import io.codelabs.digitutor.data.BaseUser;
 import io.codelabs.digitutor.data.model.Subject;
 import io.codelabs.digitutor.data.model.Tutor;
+import io.codelabs.digitutor.data.model.Ward;
 import io.codelabs.digitutor.databinding.ActivityUserBinding;
 import io.codelabs.digitutor.view.adapter.SubjectAdapter;
+import io.codelabs.digitutor.view.adapter.UsersAdapter;
 import io.codelabs.digitutor.view.fragment.SchedulesActivity;
 import io.codelabs.digitutor.view.kotlin.MakeComplaintActivity;
 import io.codelabs.recyclerview.GridItemDividerDecoration;
@@ -34,6 +36,7 @@ public class UserActivity extends BaseActivity {
 
     private ActivityUserBinding binding;
     private SubjectAdapter adapter;
+    private UsersAdapter usersAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,11 +49,21 @@ public class UserActivity extends BaseActivity {
         adapter = new SubjectAdapter(UserActivity.this, (subject, isLongClick) -> {
             // do nothing
         });
+
+        usersAdapter = new UsersAdapter(this, (baseUser, isLongClick) -> {
+            // Do nothing
+        });
         binding.subjectsGrid.setAdapter(adapter);
         binding.subjectsGrid.setLayoutManager(new LinearLayoutManager(this));
         binding.subjectsGrid.setItemAnimator(new SlideInItemAnimator());
         binding.subjectsGrid.addItemDecoration(new GridItemDividerDecoration(this, R.dimen.divider_height, R.color.divider));
         binding.subjectsGrid.setHasFixedSize(true);
+
+        binding.wardsGrid.setAdapter(usersAdapter);
+        binding.wardsGrid.setLayoutManager(new LinearLayoutManager(this));
+        binding.wardsGrid.setItemAnimator(new SlideInItemAnimator());
+        binding.wardsGrid.addItemDecoration(new GridItemDividerDecoration(this, R.dimen.divider_height, R.color.divider));
+        binding.wardsGrid.setHasFixedSize(true);
 
         if (getIntent().hasExtra(EXTRA_USER)) {
             binding.setUser(getIntent().getParcelableExtra(EXTRA_USER));
@@ -70,6 +83,7 @@ public class UserActivity extends BaseActivity {
                     if (response == null) return;
                     ExtensionUtils.debugLog(UserActivity.this, response.getType());
                     binding.setUser(response);
+                    if (response.getType().equals(BaseUser.Type.PARENT)) getWards(response.getKey());
                     getRequest(response.getKey());
                 }
 
@@ -84,6 +98,30 @@ public class UserActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    private void getWards(String key) {
+        FirebaseDataSource.getWards(this, key, new AsyncCallback<List<Ward>>() {
+            @Override
+            public void onError(@Nullable String error) {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable List<Ward> response) {
+                if (response != null) usersAdapter.addData(response);
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     /**

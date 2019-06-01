@@ -1056,4 +1056,25 @@ public final class FirebaseDataSource {
             callback.onComplete();
         }
     }
+
+    public static void getWards(BaseActivity host, String key, AsyncCallback<List<Ward>> callback) {
+        callback.onStart();
+
+        host.firestore.collection(String.format(Constants.WARDS, key))
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(host, task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        List<Ward> wards = task.getResult().toObjects(Ward.class);
+                        callback.onSuccess(wards);
+                        callback.onComplete();
+                    } else {
+                        callback.onError("Unable to fetch ward\'s information");
+                        callback.onComplete();
+                    }
+                }).addOnFailureListener(host, e -> {
+            callback.onError(e.getLocalizedMessage());
+            callback.onComplete();
+        });
+    }
 }
