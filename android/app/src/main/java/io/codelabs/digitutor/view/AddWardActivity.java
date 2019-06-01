@@ -4,12 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-
-import java.util.Objects;
-
 import io.codelabs.digitutor.R;
 import io.codelabs.digitutor.core.base.BaseActivity;
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource;
@@ -19,6 +15,8 @@ import io.codelabs.digitutor.core.util.InputValidator;
 import io.codelabs.digitutor.databinding.ActivityAddWardBinding;
 import io.codelabs.sdk.glide.GlideApp;
 import io.codelabs.sdk.util.ExtensionUtils;
+
+import java.util.Objects;
 
 /**
  * Search screen
@@ -50,47 +48,71 @@ public class AddWardActivity extends BaseActivity {
         InputValidator validator = InputValidator.INSTANCE;
 
         if (imageUrl != null && validator.hasValidInput(username)) {
-            FirebaseDataSource.uploadImage(storage, imageUrl, new AsyncCallback<String>() {
-                @Override
-                public void onError(@Nullable String error) {
-                    ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), error, true);
-                }
+            if (imageUrl != null) {
+                FirebaseDataSource.uploadImage(storage, imageUrl, new AsyncCallback<String>() {
+                    @Override
+                    public void onError(@Nullable String error) {
+                        ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), error, true);
+                    }
 
-                @Override
-                public void onSuccess(@Nullable String response) {
-                    FirebaseDataSource.addWard(firestore, prefs, new WardCredentials(username, response), new AsyncCallback<Void>() {
-                        @Override
-                        public void onError(@Nullable String error) {
-                            ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Your ward was added successfully...", false);
-                        }
+                    @Override
+                    public void onSuccess(@Nullable String response) {
+                        FirebaseDataSource.addWard(firestore, prefs, new WardCredentials(username, response), new AsyncCallback<Void>() {
+                            @Override
+                            public void onError(@Nullable String error) {
+                                ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Your ward was added successfully...", false);
+                            }
 
-                        @Override
-                        public void onSuccess(@Nullable Void response) {
-                            ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Your ward was added successfully...", false);
-                        }
+                            @Override
+                            public void onSuccess(@Nullable Void response) {
+                                ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Your ward was added successfully...", false);
+                            }
 
-                        @Override
-                        public void onStart() {
-                            ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Registering your ward...", false);
-                        }
+                            @Override
+                            public void onStart() {
+                                ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Registering your ward...", false);
+                            }
 
-                        @Override
-                        public void onComplete() {
+                            @Override
+                            public void onComplete() {
 
-                        }
-                    });
-                }
+                            }
+                        });
+                    }
 
-                @Override
-                public void onStart() {
+                    @Override
+                    public void onStart() {
 
-                }
+                    }
 
-                @Override
-                public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-                }
-            });
+                    }
+                });
+            } else {
+                FirebaseDataSource.addWard(firestore, prefs, new WardCredentials(username, null), new AsyncCallback<Void>() {
+                    @Override
+                    public void onError(@Nullable String error) {
+                        ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Your ward was added successfully...", false);
+                    }
+
+                    @Override
+                    public void onSuccess(@Nullable Void response) {
+                        ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Your ward was added successfully...", false);
+                    }
+
+                    @Override
+                    public void onStart() {
+                        ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Registering your ward...", false);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+            }
             finishAfterTransition();
         } else {
             ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Please add a photo of your ward and his/ her full name", true);

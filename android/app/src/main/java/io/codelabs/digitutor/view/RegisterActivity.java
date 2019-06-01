@@ -92,42 +92,58 @@ public class RegisterActivity extends BaseActivity {
                                     String type = getIntent().hasExtra(EXTRA_USER_TYPE) ? getIntent().getStringExtra(EXTRA_USER_TYPE) : BaseUser.Type.PARENT;
                                     prefs.login(auth.getUid(), type);
                                     isUploadProfile = false;
-                                    FirebaseDataSource.updateUserAvatar(RegisterActivity.this, firestore, type, auth.getUid(), response, isUploadProfile ? this : new AsyncCallback<Void>() {
-                                        @Override
-                                        public void onError(@Nullable String error) {
-                                            ExtensionUtils.toast(RegisterActivity.this, error, true);
-                                        }
 
-                                        @Override
-                                        public void onSuccess(@Nullable Void response) {
-                                            // Store user locally
-                                            prefs.login(auth.getUid(), getIntent().hasExtra(EXTRA_USER_TYPE) ? getIntent().getStringExtra(EXTRA_USER_TYPE) : BaseUser.Type.PARENT);
+                                    if (imageUrl != null) {
+                                        FirebaseDataSource.updateUserAvatar(RegisterActivity.this, firestore, type, auth.getUid(), response, isUploadProfile ? this : new AsyncCallback<Void>() {
+                                            @Override
+                                            public void onError(@Nullable String error) {
+                                                ExtensionUtils.toast(RegisterActivity.this, error, true);
+                                            }
 
-                                            new Handler().postDelayed(() -> {
+                                            @Override
+                                            public void onSuccess(@Nullable Void response) {
+                                                // Store user locally
+                                                prefs.login(auth.getUid(), getIntent().hasExtra(EXTRA_USER_TYPE) ? getIntent().getStringExtra(EXTRA_USER_TYPE) : BaseUser.Type.PARENT);
+
+                                                new Handler().postDelayed(() -> {
+                                                    TransitionManager.beginDelayedTransition(binding.container);
+                                                    binding.loading.setVisibility(View.GONE);
+                                                    binding.content.setVisibility(View.VISIBLE);
+
+                                                    ExtensionUtils.showConfirmationToast(RegisterActivity.this, response, username, getString(R.string.app_logged_in_as));
+                                                    ExtensionUtils.debugLog(getApplicationContext(), "Current User UID: " + auth.getUid());
+                                                    intentTo(HomeActivity.class, true);
+                                                }, 2000);
+                                            }
+
+                                            @Override
+                                            public void onStart() {
+                                                TransitionManager.beginDelayedTransition(binding.container);
+                                                binding.loading.setVisibility(View.VISIBLE);
+                                                binding.content.setVisibility(View.GONE);
+                                            }
+
+                                            @Override
+                                            public void onComplete() {
                                                 TransitionManager.beginDelayedTransition(binding.container);
                                                 binding.loading.setVisibility(View.GONE);
                                                 binding.content.setVisibility(View.VISIBLE);
+                                            }
+                                        });
+                                    } else  {
+                                        // Store user locally
+                                        prefs.login(auth.getUid(), getIntent().hasExtra(EXTRA_USER_TYPE) ? getIntent().getStringExtra(EXTRA_USER_TYPE) : BaseUser.Type.PARENT);
 
-                                                ExtensionUtils.showConfirmationToast(RegisterActivity.this, response, username, getString(R.string.app_logged_in_as));
-                                                ExtensionUtils.debugLog(getApplicationContext(), "Current User UID: " + auth.getUid());
-                                                intentTo(HomeActivity.class, true);
-                                            }, 2000);
-                                        }
-
-                                        @Override
-                                        public void onStart() {
-                                            TransitionManager.beginDelayedTransition(binding.container);
-                                            binding.loading.setVisibility(View.VISIBLE);
-                                            binding.content.setVisibility(View.GONE);
-                                        }
-
-                                        @Override
-                                        public void onComplete() {
+                                        new Handler().postDelayed(() -> {
                                             TransitionManager.beginDelayedTransition(binding.container);
                                             binding.loading.setVisibility(View.GONE);
                                             binding.content.setVisibility(View.VISIBLE);
-                                        }
-                                    });
+
+                                            ExtensionUtils.showConfirmationToast(RegisterActivity.this, response, username, getString(R.string.app_logged_in_as));
+                                            ExtensionUtils.debugLog(getApplicationContext(), "Current User UID: " + auth.getUid());
+                                            intentTo(HomeActivity.class, true);
+                                        }, 2000);
+                                    }
                                 }
 
                                 @Override
