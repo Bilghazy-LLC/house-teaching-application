@@ -62,7 +62,7 @@ class AssignmentActivity : BaseActivity() {
         val adapter = UsersAdapter(this) { item, isLongClick ->
             if (!isLongClick) {
                 ward = item.key
-                toast("${item.name} selected as Parent")
+                toast("${item.name} selected")
             }
         }
         binding.wardsGrid.layoutManager = LinearLayoutManager(this)
@@ -72,7 +72,25 @@ class AssignmentActivity : BaseActivity() {
         binding.wardsGrid.setHasFixedSize(true)
         FirebaseDataSource.getAllClients(this, firestore, prefs, object : AsyncCallback<MutableList<Parent>?> {
             override fun onSuccess(response: MutableList<Parent>?) {
-                if (response != null) adapter.addData(response)
+                response?.forEach {
+                    FirebaseDataSource.getWards(this@AssignmentActivity, it.key, object: AsyncCallback<MutableList<Ward>?> {
+                        override fun onSuccess(wardResponse: MutableList<Ward>?) {
+                            if (wardResponse != null) adapter.addData(wardResponse)
+                        }
+
+                        override fun onComplete() {
+
+                        }
+
+                        override fun onError(error: String?) {
+
+                        }
+
+                        override fun onStart() {
+
+                        }
+                    })
+                }
             }
 
             override fun onComplete() {

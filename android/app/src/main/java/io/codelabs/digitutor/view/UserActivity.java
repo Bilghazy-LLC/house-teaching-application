@@ -83,7 +83,7 @@ public class UserActivity extends BaseActivity {
                     if (response == null) return;
                     ExtensionUtils.debugLog(UserActivity.this, response.getType());
                     binding.setUser(response);
-                    if (response.getType().equals(BaseUser.Type.PARENT)) getWards(response.getKey());
+                    if (prefs.getType().equals(BaseUser.Type.PARENT)) getWards(prefs.getKey());
                     getRequest(response.getKey());
                 }
 

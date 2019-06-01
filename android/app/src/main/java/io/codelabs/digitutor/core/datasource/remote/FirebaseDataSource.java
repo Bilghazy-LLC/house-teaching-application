@@ -1057,7 +1057,7 @@ public final class FirebaseDataSource {
         }
     }
 
-    public static void getWards(BaseActivity host, String key, AsyncCallback<List<Ward>> callback) {
+    public static void getWards(@NotNull BaseActivity host, String key, @NotNull AsyncCallback<List<Ward>> callback) {
         callback.onStart();
 
         host.firestore.collection(String.format(Constants.WARDS, key))
@@ -1069,7 +1069,7 @@ public final class FirebaseDataSource {
                         callback.onSuccess(wards);
                         callback.onComplete();
                     } else {
-                        callback.onError("Unable to fetch ward\'s information");
+                        callback.onError("Unable to fetch wards\'s information");
                         callback.onComplete();
                     }
                 }).addOnFailureListener(host, e -> {
