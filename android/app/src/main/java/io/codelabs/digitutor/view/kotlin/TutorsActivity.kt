@@ -22,6 +22,8 @@ class TutorsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tutors)
+        setSupportActionBar(binding.toolbar)
+        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
 
         val adapter = UsersAdapter(applicationContext) { item, _ ->
             intentTo(UserActivity::class.java, Bundle().apply {
@@ -49,7 +51,7 @@ class TutorsActivity : BaseActivity() {
                                 val filter =
                                     subjRes?.filter { subject -> subject.name == intent.getStringExtra(SUBJECT_QUERY) }
 
-                                if (filter != null && filter.isNotEmpty()) adapter.addData(response)
+                                if (filter != null && filter.isNotEmpty()) adapter.addData(response.filter { tutor -> tutor.key == it.key })
                             }
 
                             override fun onError(error: String?) {

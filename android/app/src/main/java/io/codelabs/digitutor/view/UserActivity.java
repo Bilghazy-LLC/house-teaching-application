@@ -109,7 +109,10 @@ public class UserActivity extends BaseActivity {
 
             @Override
             public void onSuccess(@Nullable List<Ward> response) {
-                if (response != null) usersAdapter.addData(response);
+                if (response != null) {
+                    binding.setHasWards(!response.isEmpty());
+                    usersAdapter.addData(response);
+                }
             }
 
             @Override

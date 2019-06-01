@@ -27,6 +27,7 @@ import io.codelabs.digitutor.data.model.Complaint
 import io.codelabs.digitutor.data.model.Subject
 import io.codelabs.digitutor.data.model.Tutor
 import io.codelabs.digitutor.databinding.ActivitySearchBinding
+import io.codelabs.digitutor.view.ComplaintActivity
 import io.codelabs.digitutor.view.UserActivity
 import io.codelabs.digitutor.view.adapter.SearchAdapter
 import io.codelabs.recyclerview.GridItemDividerDecoration
@@ -204,7 +205,11 @@ class SearchActivity : BaseActivity(), OnClickListener<BaseDataModel> {
                 }
 
                 is Complaint -> {
-
+                    intentTo(
+                        ComplaintActivity::class.java,
+                        bundleOf(Pair<String, Any>(ComplaintActivity.EXTRA_COMPLAINT, item)),
+                        false
+                    )
                 }
             }
         }
