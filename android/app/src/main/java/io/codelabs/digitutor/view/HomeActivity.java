@@ -61,10 +61,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         // Set FAB icon & click action
         if (BaseUser.Type.PARENT.equals(prefs.getType())) {
+            binding.toolbar.setTitle(getString(R.string.tutors));
             addFragment(new TutorsFragment());
             binding.fab.setImageDrawable(getResources().getDrawable(R.drawable.twotone_group_add_24px));
             binding.fab.setOnClickListener(v -> intentTo(AddWardActivity.class));
         } else {
+            binding.toolbar.setTitle(getString(R.string.clients));
             addFragment(new ClientsFragment());
             binding.fab.setImageDrawable(getResources().getDrawable(R.drawable.twotone_assignment_24px));
             binding.fab.setOnClickListener(v -> {
@@ -157,7 +159,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
                         username.setText(response.getName());
                         type.setText(/*String.format("Logged in as: %s", response.getType().toLowerCase())*/ response.getEmail());
-
                         ExtensionUtils.debugLog(HomeActivity.this, response);
                     }
 
@@ -180,7 +181,16 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onStart() {
         super.onStart();
-        // TODO: 030 30.04.19 Send device token to server
+        if (prefs.isLoggedIn()) {
+            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    ExtensionUtils.debugLog(HomeActivity.this, task.getResult() != null ? task.getResult().getToken() : "Token was null");
+                    if (task.getResult() != null) sendRegistrationToServer(task.getResult().getToken());
+                } else {
+                    ExtensionUtils.debugLog(HomeActivity.this, "unable to get token");
+                }
+            }).addOnFailureListener(e -> ExtensionUtils.debugLog(HomeActivity.this, e.getLocalizedMessage()));
+        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -202,18 +212,22 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 intentTo(SearchActivity.class);
                 break;
             case R.id.menu_tutor_requests:
+                binding.toolbar.setTitle(getString(R.string.requests));
                 addFragment(new RequestsFragment());
                 break;
             case R.id.menu_tutor_feedback:
+                binding.toolbar.setTitle(getString(R.string.feedback));
                 addFragment(new FeedbackFragment());
                 break;
             case R.id.menu_view_schedule:
                 intentTo(SchedulesActivity.class);
                 break;
             case R.id.menu_view_timetable:
+                binding.toolbar.setTitle(getString(R.string.timetable));
                 addFragment(new TimeTableFragment());
                 break;
             case R.id.menu_complaints:
+                binding.toolbar.setTitle(getString(R.string.complaints));
                 addFragment(new ComplaintsFragment());
                 break;
             case R.id.menu_subjects:

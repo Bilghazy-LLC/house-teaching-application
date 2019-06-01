@@ -44,4 +44,9 @@
     <string name="complaint_desc">Kindly post a message to this tutor. He / She will get back to you soon. Thank you
     </string>
     <string name="send_complaint">Send message</string>
+    <string name="requests">Requests</string>
+    <string name="feedback">Feedback</string>
+    <string name="timetable">Timetable</string>
+    <string name="tutors">All tutors</string>
+    <string name="clients">All parents</string>
 </resources>
