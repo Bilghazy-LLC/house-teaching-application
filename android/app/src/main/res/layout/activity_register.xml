@@ -14,10 +14,6 @@
         android:focusableInTouchMode="true"
         android:id="@+id/container">
 
-        <include
-            android:id="@+id/loading"
-            layout="@layout/loading" />
-
 
         <io.codelabs.widget.ForegroundLinearLayout
             android:layout_width="match_parent"
@@ -39,6 +35,10 @@
                 android:text="@string/home_tutor_desc"
                 android:textAppearance="?textAppearanceBody2"
                 android:layout_height="wrap_content" />
+
+            <include
+                    android:id="@+id/loading"
+                    layout="@layout/loading" />
 
             <io.codelabs.widget.ForegroundLinearLayout
                 android:layout_width="match_parent"

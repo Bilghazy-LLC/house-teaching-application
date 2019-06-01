@@ -16,6 +16,7 @@ import io.codelabs.digitutor.core.util.AsyncCallback;
 import io.codelabs.digitutor.core.util.InputValidator;
 import io.codelabs.digitutor.data.BaseUser;
 import io.codelabs.digitutor.databinding.ActivityRegisterBinding;
+import io.codelabs.digitutor.view.kotlin.LandingActivity;
 import io.codelabs.sdk.glide.GlideApp;
 import io.codelabs.sdk.util.ExtensionUtils;
 
@@ -27,7 +28,7 @@ public class RegisterActivity extends BaseActivity {
     private ActivityRegisterBinding binding;
 
     // Image url
-    private Uri imageUrl = Uri.EMPTY;
+    private Uri imageUrl = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class RegisterActivity extends BaseActivity {
 
                                                     ExtensionUtils.showConfirmationToast(RegisterActivity.this, response, username, getString(R.string.app_logged_in_as));
                                                     ExtensionUtils.debugLog(getApplicationContext(), "Current User UID: " + auth.getUid());
-                                                    intentTo(HomeActivity.class, true);
+                                                    intentTo(prefs.getType().equals(BaseUser.Type.PARENT) ? LandingActivity.class : HomeActivity.class, true);
                                                 }, 2000);
                                             }
 
@@ -141,7 +142,7 @@ public class RegisterActivity extends BaseActivity {
 
                                             ExtensionUtils.showConfirmationToast(RegisterActivity.this, response, username, getString(R.string.app_logged_in_as));
                                             ExtensionUtils.debugLog(getApplicationContext(), "Current User UID: " + auth.getUid());
-                                            intentTo(HomeActivity.class, true);
+                                            intentTo(prefs.getType().equals(BaseUser.Type.PARENT) ? LandingActivity.class : HomeActivity.class, true);
                                         }, 2000);
                                     }
                                 }

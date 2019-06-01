@@ -14,6 +14,7 @@ import io.codelabs.digitutor.core.util.AsyncCallback;
 import io.codelabs.digitutor.core.util.Constants;
 import io.codelabs.digitutor.data.BaseUser;
 import io.codelabs.digitutor.databinding.ActivityLoginBinding;
+import io.codelabs.digitutor.view.kotlin.LandingActivity;
 import io.codelabs.sdk.util.ExtensionUtils;
 
 import java.util.Objects;
@@ -74,7 +75,7 @@ public class LoginActivity extends BaseActivity {
                                     auth.getCurrentUser().getEmail() != null ? auth.getCurrentUser().getEmail() : auth.getCurrentUser().getUid(),
                                     "Logged in as...");
                             ExtensionUtils.debugLog(getApplicationContext(), "Current User UID: " + auth.getUid());
-                            intentTo(HomeActivity.class, true);
+                            intentTo(prefs.getType().equals(BaseUser.Type.PARENT) ? LandingActivity.class : HomeActivity.class, true);
                         }, 2000);
                     }
 
