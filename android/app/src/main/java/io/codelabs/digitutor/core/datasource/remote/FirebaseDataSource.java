@@ -356,6 +356,26 @@ public final class FirebaseDataSource {
         });
     }
 
+    public static void getReports(Activity host, @NotNull FirebaseFirestore firestore, String tutor, String ward, @NotNull AsyncCallback<List<Report>> callback) {
+        callback.onStart();
+        firestore.collection(Constants.REPORTS)
+                .whereEqualTo("tutor", tutor)
+                .whereEqualTo("ward", ward)
+                .get()
+                .addOnCompleteListener(host, task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        callback.onSuccess(Objects.requireNonNull(task.getResult()).toObjects(Report.class));
+                        callback.onComplete();
+                    } else {
+                        callback.onError(Objects.requireNonNull(task.getException()).getLocalizedMessage());
+                        callback.onComplete();
+                    }
+                }).addOnFailureListener(host, e -> {
+            callback.onError(e.getLocalizedMessage());
+            callback.onComplete();
+        });
+    }
+
     public static void fetchAllSchedules(Activity host, @NotNull FirebaseFirestore firestore, String tutor, @NotNull AsyncCallback<List<Timetable>> callback) {
         callback.onStart();
         firestore.collection(Constants.SCHEDULES)

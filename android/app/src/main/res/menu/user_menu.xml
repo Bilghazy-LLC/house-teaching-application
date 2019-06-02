@@ -21,6 +21,12 @@
             android:icon="@drawable/twotone_calendar_today_24px"/>
 
     <item
+            android:id="@+id/menu_tutor_reports"
+            android:title="View Reports"
+            app:showAsAction="never"
+            android:icon="@drawable/twotone_receipt_24px" />
+
+    <item
             android:id="@+id/menu_rate_tutor"
             android:title="Rate Tutor"
             app:showAsAction="never"

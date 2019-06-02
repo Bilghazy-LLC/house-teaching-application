@@ -66,7 +66,7 @@
                 android:name=".view.RequestDetailsActivity"
                 android:configChanges="orientation|screenLayout|screenSize"/>
         <activity android:name=".view.ComplaintActivity"/>
-        <activity android:name=".view.fragment.SchedulesActivity"/>
+        <activity android:name=".view.kotlin.SchedulesActivity"/>
         <activity android:name=".view.kotlin.FeedbackActivity"/>
         <activity android:name=".view.kotlin.MakeComplaintActivity"/>
         <activity android:name=".view.kotlin.LandingActivity"/>

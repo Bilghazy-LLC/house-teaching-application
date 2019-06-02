@@ -27,7 +27,7 @@ import io.codelabs.digitutor.databinding.ActivityUserBinding;
 import io.codelabs.digitutor.view.adapter.DaysAdapter;
 import io.codelabs.digitutor.view.adapter.SubjectAdapter;
 import io.codelabs.digitutor.view.adapter.UsersAdapter;
-import io.codelabs.digitutor.view.fragment.SchedulesActivity;
+import io.codelabs.digitutor.view.kotlin.SchedulesActivity;
 import io.codelabs.digitutor.view.kotlin.MakeComplaintActivity;
 import io.codelabs.recyclerview.GridItemDividerDecoration;
 import io.codelabs.recyclerview.SlideInItemAnimator;
