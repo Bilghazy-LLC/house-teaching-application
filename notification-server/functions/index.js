@@ -144,9 +144,19 @@ exports.notifyRequest = functions.firestore.document('requests/{requestId}').onD
 
                 // Send timetable to the wards database
                 // todo: replace 'parentData.wards[0]' with 'data.timetable.ward'
-                return admin.firestore().collection(`parents/${parent}/${parentData.wards[0]}/timetables`)
-                    .doc(data.timetable.key)
-                    .set(data.timetable)
+                var newData = {
+                    day: data.timetable.day,
+                    endTime: data.timetable.endTime,
+                    key: data.timetable.key,
+                    startTime: data.timetable.startTime,
+                    subject: data.timetable.subject,
+                    tutor: data.timetable.tutor,
+                    ward: data.timetable.ward == "" ? parentData.wards[0] : data.timetable.ward
+                };
+                
+                return admin.firestore().collection(`parents/${parent}/wards/${parentData.wards[0]}/timetables`)
+                    .doc(newData.key)
+                    .set(newData)
                     .then(() => {
                         console.log('Added to wards timetable successfully');
                         return admin.firestore().collection('tutors').doc(tutor)
@@ -155,7 +165,7 @@ exports.notifyRequest = functions.firestore.document('requests/{requestId}').onD
 
                                 if (snapshot.exists) {
                                     // Send notification
-                                    admin.messaging().sendToDevice(deviceToken, {
+                                    return admin.messaging().sendToDevice(deviceToken, {
                                         data: {
                                             id: requestId,
                                             tutor: snapshot.data().key,
