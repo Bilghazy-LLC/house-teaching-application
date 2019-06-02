@@ -1,7 +1,7 @@
 package io.codelabs.digitutor.view.kotlin
 
-import android.content.Intent
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.codelabs.digitutor.R
@@ -11,6 +11,7 @@ import io.codelabs.digitutor.core.util.AsyncCallback
 import io.codelabs.digitutor.data.model.Ward
 import io.codelabs.digitutor.databinding.ActivityWardsBinding
 import io.codelabs.digitutor.view.adapter.UsersAdapter
+import io.codelabs.digitutor.view.fragment.TimeTableFragment
 import io.codelabs.recyclerview.GridItemDividerDecoration
 import io.codelabs.recyclerview.SlideInItemAnimator
 import io.codelabs.sdk.util.debugLog
@@ -26,9 +27,7 @@ class WardsActivity : BaseActivity() {
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
 
         val adapter = UsersAdapter(applicationContext) { item, _ ->
-            setResult(WARD_EXTRA_CODE, Intent().apply {
-                putExtra(WARD_EXTRA, item)
-            })
+            TimeTableFragment().arguments = bundleOf(Pair<String, Any?>(WARD_EXTRA, item))
             finishAfterTransition()
         }
 
