@@ -314,6 +314,9 @@ public class UserActivity extends BaseActivity {
                     startActivity(shareIntent);
                 }
                 return true;
+            case R.id.menu_available_days:
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

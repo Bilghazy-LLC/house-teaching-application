@@ -52,12 +52,6 @@ class TimeTableActivity : BaseActivity() {
         }
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        loadDataFromDatabase()
-    }
-
     private fun loadDataFromDatabase() {
         try {
             val snackbar = Snackbar.make(binding.root, "Error loading your wards", Snackbar.LENGTH_INDEFINITE)
@@ -139,7 +133,7 @@ class TimeTableActivity : BaseActivity() {
         val snackbar = Snackbar.make(binding.root, "Error loading your wards", Snackbar.LENGTH_INDEFINITE)
 
         try {
-            FirebaseDataSource.getTimetableForUser(this, ward, object : AsyncCallback<List<Timetable>> {
+            FirebaseDataSource.getTimetableForUser(this, ward, object : AsyncCallback<MutableList<Timetable>> {
                 override fun onError(error: String?) {
                     TransitionManager.beginDelayedTransition(binding.fragmentContainer)
                     binding.grid?.visibility = View.VISIBLE
@@ -147,9 +141,9 @@ class TimeTableActivity : BaseActivity() {
                     snackbar.show()
                 }
 
-                override fun onSuccess(response: List<Timetable>?) {
+                override fun onSuccess(response: MutableList<Timetable>?) {
                     if (response != null) {
-                        // adapter.addData(response);
+                        adapter?.addData(response)
                     } else
                         snackbar.show()
                 }
@@ -178,7 +172,7 @@ class TimeTableActivity : BaseActivity() {
 
         if (ward != null && ward.key.isNotEmpty()) {
             binding.ward = ward
-            
+
             GlideApp.with(this)
                 .load(ward.avatar)
                 .circleCrop()
