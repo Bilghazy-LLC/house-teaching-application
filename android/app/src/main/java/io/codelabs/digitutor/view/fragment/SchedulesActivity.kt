@@ -15,6 +15,7 @@ import io.codelabs.digitutor.R
 import io.codelabs.digitutor.core.base.BaseActivity
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource
 import io.codelabs.digitutor.core.util.AsyncCallback
+import io.codelabs.digitutor.core.util.OnClickListener
 import io.codelabs.digitutor.data.BaseUser
 import io.codelabs.digitutor.data.model.*
 import io.codelabs.digitutor.databinding.ActivitySchedulesBinding
@@ -46,17 +47,52 @@ class SchedulesActivity : BaseActivity() {
         binding.toolbar.setNavigationOnClickListener { v -> onBackPressed() }
 
         binding.isTutor = prefs.type == BaseUser.Type.TUTOR
-        debugLog("User is tutor: " + binding.isTutor)
 
-        // Setup recyclerview
-        adapter = TimetableAdapter(this)
+        adapter = TimetableAdapter(this, !(binding.isTutor as Boolean), OnClickListener { item, _ ->
+            MaterialDialog(this).show {
+                title(text = "Confirm schedule...")
+                message(text = "Do you wish to request service from this tutor based on this schedule?")
+                positiveButton(text = "Send") {
+                    it.dismiss()
+
+                    val uid =
+                        if (intent.hasExtra(EXTRA_TUTOR_ID)) intent.getStringExtra(EXTRA_TUTOR_ID) else intent.getParcelableExtra<BaseUser>(
+                            EXTRA_TUTOR
+                        ).key
+                    applicationContext.toast("Sending request...", false)
+                    FirebaseDataSource.requestService(
+                        firestore,
+                        prefs,
+                        uid,
+                        item,
+                        object : AsyncCallback<Void> {
+                            override fun onError(error: String?) {
+                                applicationContext.toast(error, true)
+                            }
+
+                            override fun onSuccess(response: Void?) {
+                                applicationContext.toast("Request sent successfully", false)
+                            }
+
+                            override fun onStart() {
+
+                            }
+
+                            override fun onComplete() {
+                                applicationContext.toast("Request completed", false)
+                            }
+                        })
+                    finish()
+                }
+                negativeButton(text = "Dismiss") { it.dismiss() }
+            }
+        })
         binding.schedulesGrid.setHasFixedSize(false)
         binding.schedulesGrid.adapter = adapter
         val lm = LinearLayoutManager(this)
         binding.schedulesGrid.layoutManager = lm
         binding.schedulesGrid.itemAnimator = SlideInItemAnimator()
         binding.schedulesGrid.addItemDecoration(DividerItemDecoration(this, lm.orientation))
-
         loadData()
     }
 

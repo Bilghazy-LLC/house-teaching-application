@@ -211,29 +211,9 @@ public class UserActivity extends BaseActivity {
 
     public void requestService(View view) {
         if (binding.getUser() != null && binding.getUser() instanceof Tutor) {
-            ExtensionUtils.toast(getApplicationContext(), "Sending request...", false);
-            FirebaseDataSource.requestService(firestore, prefs, binding.getUser().getKey(), new AsyncCallback<Void>() {
-                @Override
-                public void onError(@Nullable String error) {
-                    ExtensionUtils.toast(getApplicationContext(), error, true);
-                }
+            Bundle bundle = new Bundle(0);
 
-                @Override
-                public void onSuccess(@Nullable Void response) {
-                    ExtensionUtils.toast(getApplicationContext(), "Request sent successfully", false);
-                }
-
-                @Override
-                public void onStart() {
-
-                }
-
-                @Override
-                public void onComplete() {
-                    ExtensionUtils.toast(getApplicationContext(), "Request completed", false);
-                }
-            });
-            finish();
+            intentTo(SchedulesActivity.class, bundle, false);
         } else {
             ExtensionUtils.toast(this, "Cannot send request. Please make sure that this request is sent to a tutor instead", true);
         }

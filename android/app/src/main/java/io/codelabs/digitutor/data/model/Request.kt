@@ -8,11 +8,11 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class Request(
-        override var key: String,
-        val parent: String,
-        val tutor: String,
-        val timestamp: Long = System.currentTimeMillis()
+    override var key: String,
+    val parent: String,
+    val tutor: String,
+    val timestamp: Long = System.currentTimeMillis(),
+    val timetable: Timetable
 ) : BaseDataModel {
-
-    constructor() : this("", "", "", 0L)
+    constructor() : this("", "", "", 0L, Timetable())
 }

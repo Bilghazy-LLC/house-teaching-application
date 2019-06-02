@@ -1,6 +1,5 @@
 package io.codelabs.digitutor.view.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -9,13 +8,18 @@ import io.codelabs.digitutor.R
 import io.codelabs.digitutor.core.base.BaseActivity
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource
 import io.codelabs.digitutor.core.util.AsyncCallback
+import io.codelabs.digitutor.core.util.OnClickListener
 import io.codelabs.digitutor.data.model.Subject
 import io.codelabs.digitutor.data.model.Timetable
 import io.codelabs.digitutor.databinding.ItemTimetableBinding
 import io.codelabs.digitutor.view.adapter.viewholder.EmptyViewHolder
 import io.codelabs.sdk.util.debugLog
 
-class TimetableAdapter constructor(private val context: BaseActivity) :
+class TimetableAdapter constructor(
+    private val context: BaseActivity,
+    showCheckboxes: Boolean = false,
+    private val listener: OnClickListener<Timetable>
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val dataSource: MutableList<Timetable> = mutableListOf()
@@ -57,7 +61,7 @@ class TimetableAdapter constructor(private val context: BaseActivity) :
 
         FirebaseDataSource.getSubject(firestore, timetable.subject, object : AsyncCallback<Subject?> {
             override fun onSuccess(response: Subject?) {
-                if (response != null) holder.bind(response, timetable, context)
+                if (response != null) holder.bind(response, timetable, listener)
             }
 
             override fun onComplete() {
@@ -83,10 +87,14 @@ class TimetableAdapter constructor(private val context: BaseActivity) :
 
     class TimetableViewHolder(private val binding: ItemTimetableBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(subject: Subject, timetable: Timetable, context: Context) {
+        fun bind(subject: Subject, timetable: Timetable, listener: OnClickListener<Timetable>) {
             binding.timetable = timetable
             binding.subject = subject
-            binding.context = context
+            binding.root.setOnClickListener { listener.onClick(timetable, false) }
+            binding.root.setOnLongClickListener {
+                listener.onClick(timetable, true)
+                true
+            }
         }
     }
 }

@@ -4,17 +4,34 @@
         <variable name="timetable" type="io.codelabs.digitutor.data.model.Timetable"/>
         <variable name="subject" type="io.codelabs.digitutor.data.model.Subject"/>
         <import type="android.text.format.DateUtils"/>
-        <variable name="context" type="android.content.Context"/>
     </data>
     <com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
                                                        android:layout_height="wrap_content"
                                                        android:layout_margin="@dimen/spacing_micro">
 
-        <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
-                                               android:layout_height="wrap_content"
-                                               app:icon="@drawable/twotone_event_24px"
-                                               app:summary="@{String.format(`timetable`), default=`8am`}"
-                                               app:title="@{subject.name, default=`English language`}"/>
+        <io.codelabs.widget.ForegroundLinearLayout android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:orientation="vertical">
+
+            <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   app:icon="@drawable/twotone_event_24px"
+                                                   app:summary="@{subject.name, default=`English language`}"
+                                                   app:title="Subject"/>
+
+            <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   app:icon="@drawable/twotone_event_24px"
+                                                   app:summary="@{timetable.day, default=`Monday`}"
+                                                   app:title="Day of Week"/>
+
+            <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   app:icon="@drawable/twotone_event_24px"
+                                                   app:summary="@{String.format(`%s --- %s`, timetable.startTime, timetable.endTime), default=`8am -- 9pm`}"
+                                                   app:title="Duration"/>
+
+        </io.codelabs.widget.ForegroundLinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 </layout>

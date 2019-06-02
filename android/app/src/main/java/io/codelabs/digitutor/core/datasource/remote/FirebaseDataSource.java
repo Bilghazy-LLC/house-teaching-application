@@ -446,7 +446,7 @@ public final class FirebaseDataSource {
         }
     }
 
-    public static void requestService(@NotNull FirebaseFirestore firestore, @NotNull UserSharedPreferences prefs, String tutor, @NotNull AsyncCallback<Void> callback) {
+    public static void requestService(@NotNull FirebaseFirestore firestore, @NotNull UserSharedPreferences prefs, String tutor, Timetable timetable, @NotNull AsyncCallback<Void> callback) {
         callback.onStart();
 
         // Document reference created
@@ -455,7 +455,7 @@ public final class FirebaseDataSource {
         String key = document.getId();
 
         // Create new request data model
-        Request request = new Request(key, prefs.getKey(), tutor, System.currentTimeMillis());
+        Request request = new Request(key, prefs.getKey(), tutor, System.currentTimeMillis(), timetable);
 
 
         document.set(request).addOnCompleteListener(task -> {
