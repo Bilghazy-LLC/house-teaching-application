@@ -25,7 +25,7 @@ public class AddWardActivity extends BaseActivity {
     private ActivityAddWardBinding binding;
     private static final int RC_PROFILE = 3;
     // Image url
-    private Uri imageUrl = Uri.EMPTY;
+    private Uri imageUrl = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class AddWardActivity extends BaseActivity {
         String username = Objects.requireNonNull(binding.username.getText()).toString();
         InputValidator validator = InputValidator.INSTANCE;
 
-        if (imageUrl != null && validator.hasValidInput(username)) {
+        if (validator.hasValidInput(username)) {
             if (imageUrl != null) {
                 FirebaseDataSource.uploadImage(storage, imageUrl, new AsyncCallback<String>() {
                     @Override
@@ -60,7 +60,7 @@ public class AddWardActivity extends BaseActivity {
                         FirebaseDataSource.addWard(firestore, prefs, new WardCredentials(username, response), new AsyncCallback<Void>() {
                             @Override
                             public void onError(@Nullable String error) {
-                                ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Your ward was added successfully...", false);
+                                ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), error, false);
                             }
 
                             @Override
@@ -72,22 +72,7 @@ public class AddWardActivity extends BaseActivity {
                             public void onStart() {
                                 ExtensionUtils.toast(AddWardActivity.this.getApplicationContext(), "Registering your ward...", false);
                             }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
                         });
-                    }
-
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
             } else {
