@@ -65,6 +65,8 @@ public class UserActivity extends BaseActivity {
             // Do nothing
         });
 
+        binding.setIsCurrentUser(!prefs.getType().equals(BaseUser.Type.TUTOR));
+
         binding.subjectsGrid.setAdapter(adapter);
         binding.subjectsGrid.setItemAnimator(new SlideInItemAnimator());
         binding.subjectsGrid.addItemDecoration(new GridItemDividerDecoration(this, R.dimen.divider_height, R.color.divider));
@@ -163,7 +165,7 @@ public class UserActivity extends BaseActivity {
             @Override
             public void onSuccess(@Nullable Boolean response) {
                 ExtensionUtils.debugLog(UserActivity.this, response);
-                binding.requestButton.setEnabled(response != null && response);
+                binding.setIsCurrentUser(response != null && response);
 
                 if (binding.getUser().getType().equals(BaseUser.Type.TUTOR)) {
                     // Get all subjects for this tutor
@@ -237,11 +239,13 @@ public class UserActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (prefs.getType().equals(BaseUser.Type.PARENT) ||
+        /*if (prefs.getType().equals(BaseUser.Type.PARENT) ||
                 prefs.getType().equals(BaseUser.Type.WARD)) {
             getMenuInflater().inflate(R.menu.user_menu, menu);
             if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        }
+        }*/
+        getMenuInflater().inflate(R.menu.user_menu, menu);
+        if (menu instanceof MenuBuilder) ((MenuBuilder) menu).setOptionalIconsVisible(true);
         return true;
     }
 
@@ -251,6 +255,9 @@ public class UserActivity extends BaseActivity {
         if (item != null) item.setVisible(prefs.getType().equals(BaseUser.Type.TUTOR));
         MenuItem rateItem = menu.findItem(R.id.menu_rate_tutor);
         if (rateItem != null) rateItem.setVisible(prefs.getType().equals(BaseUser.Type.PARENT));
+        MenuItem complaintItem = menu.findItem(R.id.menu_make_complaints);
+        if (complaintItem != null)
+            complaintItem.setVisible(prefs.getType().equals(BaseUser.Type.PARENT) || prefs.getType().equals(BaseUser.Type.WARD));
         return true;
     }
 

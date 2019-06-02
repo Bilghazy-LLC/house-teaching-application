@@ -8,6 +8,7 @@
         <import type="io.codelabs.digitutor.data.BaseUser"/>
 
         <variable name="hasWards" type="Boolean"/>
+        <variable name="isCurrentUser" type="Boolean"/>
 
         <import type="android.view.View"/>
 
@@ -180,7 +181,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/spacing_large"
                             android:onClick="requestService"
-                            android:enabled="false"
+                            android:enabled="@{isCurrentUser ? false : true, default=`false`}"
                             android:id="@+id/request_button"
                             android:text="@string/request_service"/>
 

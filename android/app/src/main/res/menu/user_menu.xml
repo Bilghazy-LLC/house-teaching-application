@@ -12,7 +12,7 @@
             android:id="@+id/menu_available_days"
             android:title="Add available days"
             app:showAsAction="ifRoom"
-            android:icon="@drawable/twotone_add_24px"/>
+            android:icon="@drawable/twotone_event_white"/>
 
     <item
             android:id="@+id/menu_view_schedule"
