@@ -153,7 +153,7 @@ exports.notifyRequest = functions.firestore.document('requests/{requestId}').onD
                     tutor: data.timetable.tutor,
                     ward: data.timetable.ward == "" ? parentData.wards[0] : data.timetable.ward
                 };
-                
+
                 return admin.firestore().collection(`parents/${parent}/wards/${parentData.wards[0]}/timetables`)
                     .doc(newData.key)
                     .set(newData)
@@ -252,6 +252,53 @@ exports.notifyComplaint = functions.firestore.document('complaints/{complaintKey
             }
         })
 });
+
+// exports.notifyReport = functions.firestore.document('reports/{reportId}').onCreate((change, context) => {
+//     // Extract the user's ID
+//     var id = context.params.reportId ? context.params.reportId : change.id;
+//     var data = change.data();
+
+//     // Get the parent and the tutor
+//     var ward = data.ward;
+//     var tutor = data.tutor;
+
+//     // Get the parent's device token and send a notification to their device
+//     // Get parent's information
+//     return admin.firestore().collection('parent')
+//         .get().then(querySnapshot => {
+//             if (querySnapshot.exists) {
+//                 var tutorData = querySnapshot.data();
+//                 var deviceToken = tutorData.token;
+
+//                 return admin.messaging().sendToDevice(deviceToken, {
+//                     data: {
+//                         key: complaintKey,
+//                         tutor: snapshot.data().key,
+//                         parent: parent,
+//                         description: data.description,
+//                         timestamp: data.timestamp.toString(),
+//                         title: `Complaint received`,
+//                         message: 'Your request for service was accepted',
+//                         createdAt: `${new Date().getTime()}`,
+//                         updatedAt: `${data.timestamp}`,
+//                         type: 'parent-complaint'
+//                     }
+//                 }).then(response => {
+//                     return console.log('Notification sent to tutor successfully');
+//                 }).catch(err => {
+//                     if (err) {
+//                         return console.log(err);
+//                     }
+//                 })
+//             } else {
+//                 return console.log("Unable to get the parent.", parent);
+//             }
+//         }).catch(error => {
+//             if (error) {
+//                 return console.log(error);
+//             }
+//         })
+// });
 
 // 
 exports.wardAssignment = functions.firestore.document('tutors/{tutorId}/assignments/{assignmentId}').onCreate((change, context) => {

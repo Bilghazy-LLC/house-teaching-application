@@ -1,4 +1,4 @@
-package io.codelabs.digitutor.view.fragment
+package io.codelabs.digitutor.view.kotlin
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +20,6 @@ import io.codelabs.digitutor.data.BaseUser
 import io.codelabs.digitutor.data.model.*
 import io.codelabs.digitutor.databinding.ActivitySchedulesBinding
 import io.codelabs.digitutor.databinding.ItemScheduleBinding
-import io.codelabs.digitutor.view.kotlin.AvailableDaysActivity
 import io.codelabs.digitutor.view.adapter.TimetableAdapter
 import io.codelabs.digitutor.view.adapter.viewholder.EmptyViewHolder
 import io.codelabs.recyclerview.SlideInItemAnimator
@@ -56,7 +55,9 @@ class SchedulesActivity : BaseActivity() {
                     it.dismiss()
 
                     val uid =
-                        if (intent.hasExtra(EXTRA_TUTOR_ID)) intent.getStringExtra(EXTRA_TUTOR_ID) else intent.getParcelableExtra<BaseUser>(
+                        if (intent.hasExtra(EXTRA_TUTOR_ID)) intent.getStringExtra(
+                            EXTRA_TUTOR_ID
+                        ) else intent.getParcelableExtra<BaseUser>(
                             EXTRA_TUTOR
                         ).key
                     applicationContext.toast("Sending request...", false)
@@ -282,7 +283,8 @@ class SchedulesActivity : BaseActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             return when (viewType) {
-                EMPTY -> EmptyViewHolder(inflater.inflate(EMPTY, parent, false))
+                EMPTY -> EmptyViewHolder(inflater.inflate(
+                    EMPTY, parent, false))
                 DATA -> SchedulesViewHolder(
                     DataBindingUtil.inflate(
                         inflater,

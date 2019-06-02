@@ -16,6 +16,7 @@ import io.codelabs.digitutor.view.ComplaintActivity;
 import io.codelabs.digitutor.view.HomeActivity;
 import io.codelabs.digitutor.view.RequestDetailsActivity;
 import io.codelabs.digitutor.view.kotlin.FeedbackActivity;
+import io.codelabs.digitutor.view.kotlin.ReportActivity;
 import io.codelabs.sdk.util.ExtensionUtils;
 
 import java.util.Map;
@@ -33,6 +34,7 @@ public class AppMessagingService extends FirebaseMessagingService {
 
     public static final String TYPE_REQUEST = "tutor-request";
     public static final String TYPE_FEEDBACK = "tutor-feedback";
+    public static final String TYPE_REPORT = "tutor-report";
     public static final String TYPE_ASSIGNMENT = "ward-assignment";
     public static final String TYPE_COMPLAINT = "parent-complaint";
 
@@ -64,6 +66,15 @@ public class AppMessagingService extends FirebaseMessagingService {
 
                     // Send notification to device
                     pushNotification(data.get("title"), data.get("message"), feedbackIntent);
+                    break;
+
+                case TYPE_REPORT:
+                    Intent reportIntent = new Intent(getApplicationContext(), ReportActivity.class);
+                    ExtensionUtils.debugLog(getApplicationContext(), "Feedback received as: " + data.get("key"));
+                    reportIntent.putExtra(ReportActivity.EXTRA_REPORT_ID, data.get("key"));
+
+                    // Send notification to device
+                    pushNotification(data.get("title"), data.get("message"), reportIntent);
                     break;
 
                 case TYPE_ASSIGNMENT:
