@@ -1007,7 +1007,7 @@ public final class FirebaseDataSource {
 
         if (prefs.getType().equals(BaseUser.Type.PARENT)) {
             firestore.collection(String.format(Constants.TIMETABLES, prefs.getKey(), ward))
-                    .orderBy("time", Query.Direction.DESCENDING)
+                    .orderBy("day", Query.Direction.DESCENDING)
                     .addSnapshotListener(host, (queryDocumentSnapshots, e) -> {
                         if (e != null) {
                             callback.onError(e.getLocalizedMessage());

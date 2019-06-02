@@ -275,14 +275,15 @@ public class UserActivity extends BaseActivity {
                 b.putParcelable(MakeComplaintActivity.EXTRA_TUTOR, getIntent().getParcelableExtra(EXTRA_USER));
                 b.putString(MakeComplaintActivity.EXTRA_TUTOR_ID, getIntent().getStringExtra(EXTRA_USER_UID));
                 intentTo(MakeComplaintActivity.class, b, false);
-
                 return true;
+
             case R.id.menu_view_schedule:
                 Bundle bundle = new Bundle(0);
                 bundle.putParcelable(SchedulesActivity.EXTRA_TUTOR, getIntent().getParcelableExtra(EXTRA_USER));
                 bundle.putString(SchedulesActivity.EXTRA_TUTOR_ID, getIntent().getStringExtra(EXTRA_USER_UID));
                 intentTo(SchedulesActivity.class, bundle, false);
                 return true;
+
             case R.id.menu_rate_tutor:
                 View v = getLayoutInflater().inflate(R.layout.tutor_ratings, null, false);
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(UserActivity.this).setTitle("Rate tutor")
@@ -304,6 +305,7 @@ public class UserActivity extends BaseActivity {
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
                 return true;
+
             case R.id.menu_recommend:
                 Intent shareIntent = ShareCompat.IntentBuilder.from(this)
                         .setType("text/plain")
@@ -314,8 +316,9 @@ public class UserActivity extends BaseActivity {
                     startActivity(shareIntent);
                 }
                 return true;
-            case R.id.menu_available_days:
 
+            case R.id.menu_available_days:
+                intentTo(AvailableDaysActivity.class);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

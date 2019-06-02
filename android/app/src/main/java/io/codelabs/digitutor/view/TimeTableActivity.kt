@@ -71,7 +71,7 @@ class TimeTableActivity : BaseActivity() {
                                 this@TimeTableActivity.wards.addAll(wards)
                                 loadWardInfo(wards[0])
                                 loadWardTimetable(wards[0])
-                                binding.pickWard?.setOnClickListener { v ->
+                                binding.pickWard?.setOnClickListener { _ ->
                                     intentTo(
                                         WardsActivity::class.java,
                                         WardsActivity.WARD_EXTRA_CODE
