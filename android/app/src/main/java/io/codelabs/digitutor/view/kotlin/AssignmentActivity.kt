@@ -39,7 +39,7 @@ class AssignmentActivity : BaseActivity() {
     private var filePath: Uri? = Uri.EMPTY
     private val names = mutableListOf<String>()
     private val subjects = mutableListOf<Subject>()
-    private val wards = mutableListOf<Ward>()
+//    private val wards = mutableListOf<Ward>()
     private var ward: String? = null
     private var startDate: Long? = null
     private var endDate: Long? = null

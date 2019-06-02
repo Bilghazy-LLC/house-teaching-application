@@ -55,4 +55,5 @@
     <string name="available_days">Available Days</string>
     <string name="do_not_have_lessons">You do not have lectures today</string>
     <string name="notification_title">Lesson Reminder</string>
+    <string name="assignments">Ward\'s Assignments</string>
 </resources>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="subject" type="io.codelabs.digitutor.data.model.Subject"/>
+        <variable name="assignment" type="io.codelabs.digitutor.data.model.Assignment"/>
+        <import type="android.text.format.DateUtils"/>
+    </data>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_micro"
+            android:padding="@dimen/padding_normal">
+
+        <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               app:title="Subject"
+                                               app:icon="@drawable/twotone_receipt_24px"
+                                               app:summary="@{subject.name, default=`English Language`}"/>
+
+        <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               app:title="Comment"
+                                               app:icon="@drawable/twotone_chat_bubble_24px"
+                                               app:summary="@{assignment.comment, default=`Some short comment goes here`}"/>
+
+        <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               app:title="Date Given"
+                                               app:icon="@drawable/twotone_calendar_today_24px"
+                                               app:summary="@{DateUtils.getRelativeTimeSpanString(assignment.dateGiven, System.currentTimeMillis(),DateUtils.SECOND_IN_MILLIS).toString(), default=`14 hours ago`}"/>
+
+        <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               app:title="Date Due"
+                                               app:icon="@drawable/twotone_history_24px"
+                                               app:summary="@{DateUtils.getRelativeTimeSpanString(assignment.dateDue, System.currentTimeMillis(),DateUtils.SECOND_IN_MILLIS).toString(), default=`In 5 hours`}"/>
+
+        <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
+                                                           android:layout_height="wrap_content"
+                                                           style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                                           android:text="Download attachment"
+                                                           android:id="@+id/download"
+                                                           android:layout_gravity="end|center_vertical"
+                                                           app:icon="@drawable/twotone_save_alt_24px"/>
+
+    </LinearLayout>
+</layout>

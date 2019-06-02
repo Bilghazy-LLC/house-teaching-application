@@ -41,7 +41,7 @@ class TimeTableActivity : BaseActivity() {
 
         adapter = TimetableAdapter(this, false, OnClickListener { item, _ ->
             debugLog(item)
-            toast(item)
+            toast("No details available")
         })
         binding.grid?.adapter = adapter
         val lm = LinearLayoutManager(this)

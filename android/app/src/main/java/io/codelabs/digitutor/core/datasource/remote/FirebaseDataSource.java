@@ -840,20 +840,21 @@ public final class FirebaseDataSource {
                                          FirebaseFirestore firestore,
                                          @NotNull UserSharedPreferences prefs,
                                          @Nullable String subject,
+                                         @Nullable String tutor,
                                          @NotNull AsyncCallback<List<Assignment>> callback) {
         callback.onStart();
 
-        if (!prefs.isLoggedIn() || !prefs.getType().equals(BaseUser.Type.TUTOR)) {
+        /*if (!prefs.isLoggedIn() || !prefs.getType().equals(BaseUser.Type.TUTOR)) {
             callback.onError("Please sign in as a tutor first");
             callback.onComplete();
             return;
-        }
+        }*/
 
         Query query;
         if (subject == null) {
-            query = firestore.collection(String.format(Constants.ASSIGNMENTS, prefs.getKey()));
+            query = firestore.collection(String.format(Constants.ASSIGNMENTS, tutor));
         } else
-            query = firestore.collection(String.format(Constants.ASSIGNMENTS, prefs.getKey())).whereEqualTo("subject", subject);
+            query = firestore.collection(String.format(Constants.ASSIGNMENTS, tutor)).whereEqualTo("subject", subject);
 
         // Attach a live listener
         query.addSnapshotListener(host, (queryDocumentSnapshots, e) -> {
