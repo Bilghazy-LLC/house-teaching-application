@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -143,7 +142,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -272,8 +270,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 intentTo(SchedulesActivity.class);
                 break;
             case R.id.menu_view_timetable:
-                binding.toolbar.setTitle(getString(R.string.timetable));
-                addFragment(new TimeTableFragment());
+                intentTo(TimeTableActivity.class);
                 break;
             case R.id.menu_complaints:
                 binding.toolbar.setTitle(getString(R.string.complaints));
@@ -331,7 +328,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
                 for (Fragment fragment : fragments) {
-                    if (fragment.getClass().getSimpleName().equals(TimeTableFragment.class.getSimpleName()))
+                    if (fragment.getClass().getSimpleName().equals(TimeTableActivity.class.getSimpleName()))
                         fragment.onActivityResult(requestCode, resultCode, data);
                 }
             }

@@ -73,6 +73,7 @@
         <activity android:name=".view.kotlin.TutorsActivity"/>
         <activity android:name=".view.kotlin.AddTimeTableActivity"/>
         <activity android:name=".view.kotlin.WardsActivity"/>
+        <activity android:name=".view.TimeTableActivity"/>
 
         <service
                 android:name=".core.notification.AppMessagingService"
