@@ -142,50 +142,49 @@ exports.notifyRequest = functions.firestore.document('requests/{requestId}').onD
                 var parentData = querySnapshot.data();
                 var deviceToken = parentData.token;
 
-                admin.firestore().collection('tutors').doc(tutor)
-                    .get()
-                    .then(snapshot => {
+                // Send timetable to the wards database
+                // todo: replace 'parentData.wards[0]' with 'data.timetable.ward'
+                return admin.firestore().collection(`parents/${parent}/${parentData.wards[0]}/timetables`)
+                    .doc(data.timetable.key)
+                    .set(data.timetable)
+                    .then(() => {
+                        console.log('Added to wards timetable successfully');
+                        return admin.firestore().collection('tutors').doc(tutor)
+                            .get()
+                            .then(snapshot => {
 
-                        if (snapshot.exists) {
-                            // Send notification
-                            admin.messaging().sendToDevice(deviceToken, {
-                                data: {
-                                    id: requestId,
-                                    tutor: snapshot.data().key,
-                                    title: `Service request update`,
-                                    message: 'Your request for service was accepted',
-                                    createdAt: `${new Date().getTime()}`,
-                                    updatedAt: `${data.timestamp}`,
-                                    type: 'tutor-request-status'
-                                }
-                            }).then(response => {
-                                console.log('Notification sent to tutor successfully');
-
-                                // Send timetable to the wards database
-                                // todo: replace 'parentData.wards[0]' with 'data.timetable.ward'
-                                return admin.firestore().collection(`parents/${parent}/${parentData.wards[0]}/timetables`)
-                                    .doc(data.timetable.key)
-                                    .set(data.timetable)
-                                    .then(() => {
-                                        return console.log('Added to wards timetable successfully');
+                                if (snapshot.exists) {
+                                    // Send notification
+                                    admin.messaging().sendToDevice(deviceToken, {
+                                        data: {
+                                            id: requestId,
+                                            tutor: snapshot.data().key,
+                                            title: `Service request update`,
+                                            message: 'Your request for service was accepted',
+                                            createdAt: `${new Date().getTime()}`,
+                                            updatedAt: `${data.timestamp}`,
+                                            type: 'tutor-request-status'
+                                        }
+                                    }).then(response => {
+                                        return console.log('Notification sent to tutor successfully');
                                     }).catch(err => {
-                                        return console.log(err.message);
-
+                                        if (err) {
+                                            return console.log(err);
+                                        }
                                     })
+                                } else {
+                                    return console.log("Unable to get this tutor.", tutor);
+
+                                }
                             }).catch(err => {
                                 if (err) {
                                     return console.log(err);
                                 }
                             })
-                        } else {
-                            return console.log("Unable to get this tutor.", tutor);
-
-                        }
                     }).catch(err => {
-                        if (err) {
-                            return console.log(err);
-                        }
-                    })
+                        return console.log(err.message);
+
+                    });
 
             } else {
                 return console.log("Unable to get the parent.", parent);

@@ -73,6 +73,7 @@
                                                                    app:layout_constraintTop_toTopOf="parent"
                                                                    app:layout_constraintBottom_toBottomOf="parent"
                                                                    android:text="Add new"
+                                                                   android:visibility="gone"
                                                                    app:icon="@drawable/twotone_event_24px"
                                                                    android:id="@+id/add_new_timetable"/>
 
