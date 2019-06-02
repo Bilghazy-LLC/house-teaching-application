@@ -1091,10 +1091,11 @@ public final class FirebaseDataSource {
         callback.onStart();
 
         host.firestore.collection(String.format(Constants.WARDS, key))
-                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .orderBy("name", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(host, task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
+                        ExtensionUtils.debugLog(host, task.getResult().getDocuments());
                         List<Ward> wards = task.getResult().toObjects(Ward.class);
                         callback.onSuccess(wards);
                         callback.onComplete();
@@ -1115,7 +1116,7 @@ public final class FirebaseDataSource {
         callback.onStart();
 
         if (host.prefs.getType().equals(BaseUser.Type.TUTOR)) {
-            Map<String, Object> hashMap = new HashMap<>();
+            Map<String, Object> hashMap = new HashMap<>(0);
             if (!availableDays.contains(dateTime)) hashMap.put("availableDays", availableDays.add(dateTime));
             else hashMap.put("availableDays", availableDays);
 

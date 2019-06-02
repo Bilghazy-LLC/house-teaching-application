@@ -3,16 +3,12 @@ package io.codelabs.digitutor.core.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import io.codelabs.digitutor.R;
 import io.codelabs.digitutor.core.datasource.local.UserSharedPreferences;
 
@@ -39,6 +35,10 @@ public abstract class BaseActivity extends io.codelabs.sdk.view.BaseActivity {
      */
     public void intentTo(Class<? extends Activity> target) {
         startActivity(new Intent(getApplicationContext(), target));
+    }
+
+    public void intentTo(Class<? extends Activity> target, int code) {
+        startActivityForResult(new Intent(getApplicationContext(), target), code);
     }
 
     public void intentTo(Class<? extends Activity> target, boolean finish) {

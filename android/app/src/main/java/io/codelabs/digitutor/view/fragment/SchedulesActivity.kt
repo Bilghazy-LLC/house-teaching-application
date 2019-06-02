@@ -17,14 +17,17 @@ import io.codelabs.digitutor.core.base.BaseActivity
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource
 import io.codelabs.digitutor.core.util.AsyncCallback
 import io.codelabs.digitutor.data.BaseUser
+import io.codelabs.digitutor.data.model.DateTime
 import io.codelabs.digitutor.data.model.Schedule
 import io.codelabs.digitutor.data.model.Subject
+import io.codelabs.digitutor.data.model.Tutor
 import io.codelabs.digitutor.databinding.ActivitySchedulesBinding
 import io.codelabs.digitutor.databinding.ItemScheduleBinding
 import io.codelabs.digitutor.view.adapter.viewholder.EmptyViewHolder
 import io.codelabs.recyclerview.SlideInItemAnimator
 import io.codelabs.sdk.util.debugLog
 import io.codelabs.sdk.util.toast
+import java.util.*
 
 class SchedulesActivity : BaseActivity() {
 
@@ -106,31 +109,61 @@ class SchedulesActivity : BaseActivity() {
     }
 
     private fun post(subject: Subject) {
-        FirebaseDataSource.postSchedule(
-            this,
-            ward,
-            subject.key,
-            startDate!!,
-            endDate!!,
-            object : AsyncCallback<Void?> {
+        FirebaseDataSource.getCurrentUser(this, firestore, prefs, object : AsyncCallback<BaseUser?> {
+            override fun onSuccess(response: BaseUser?) {
+                if (response != null) {
+                    FirebaseDataSource.addAvailableDays(
+                        this@SchedulesActivity,
+                        (response as Tutor).availableDays,
+                        DateTime(
+                            "",
+                            Calendar.getInstance().get(Calendar.DAY_OF_WEEK).toString(),
+                            startDate.toString(),
+                            endDate.toString()
+                        ),
+                        object : AsyncCallback<Void?> {
+                            override fun onSuccess(response: Void?) {
+                                FirebaseDataSource.postSchedule(
+                                    this@SchedulesActivity,
+                                    ward,
+                                    subject.key,
+                                    startDate!!,
+                                    endDate!!,
+                                    object : AsyncCallback<Void?> {
 
-                override fun onSuccess(response: Void?) {
-                    toast("Schedule added successfully")
+                                        override fun onSuccess(response: Void?) {
+                                            toast("Schedule added successfully")
+                                        }
+
+                                        override fun onComplete() {
+
+                                        }
+
+                                        override fun onError(error: String?) {
+                                            toast(error, true)
+                                        }
+
+                                        override fun onStart() {
+                                        }
+                                    })
+                                finishAfterTransition()
+                            }
+
+                            override fun onError(error: String?) {
+
+                            }
+
+                            override fun onStart() {
+                                toast("Adding schedule...")
+                            }
+                        })
                 }
+            }
 
-                override fun onComplete() {
+            override fun onError(error: String?) {
 
-                }
-
-                override fun onError(error: String?) {
-                    toast(error, true)
-                }
-
-                override fun onStart() {
-                    toast("Adding schedule...")
-                    finishAfterTransition()
-                }
-            })
+            }
+        })
     }
 
     private fun loadData() {

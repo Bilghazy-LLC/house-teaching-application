@@ -10,7 +10,8 @@ import kotlinx.android.parcel.Parcelize
 data class DateTime(
     override var key: String,
     var day: String,
-    var time: String
+    var startTime: String,
+    var endTime: String
 ) : BaseDataModel {
-    constructor() : this("", "", "")
+    constructor() : this("", "", "","")
 }

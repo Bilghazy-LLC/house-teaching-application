@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -19,11 +18,11 @@ import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource;
 import io.codelabs.digitutor.core.util.AsyncCallback;
 import io.codelabs.digitutor.core.util.Constants;
 import io.codelabs.digitutor.data.BaseUser;
-import io.codelabs.digitutor.data.model.Parent;
 import io.codelabs.digitutor.data.model.Subject;
 import io.codelabs.digitutor.data.model.Tutor;
 import io.codelabs.digitutor.data.model.Ward;
 import io.codelabs.digitutor.databinding.ActivityUserBinding;
+import io.codelabs.digitutor.view.adapter.DaysAdapter;
 import io.codelabs.digitutor.view.adapter.SubjectAdapter;
 import io.codelabs.digitutor.view.adapter.UsersAdapter;
 import io.codelabs.digitutor.view.fragment.SchedulesActivity;
@@ -44,6 +43,7 @@ public class UserActivity extends BaseActivity {
     private ActivityUserBinding binding;
     private SubjectAdapter adapter;
     private UsersAdapter usersAdapter;
+    private DaysAdapter daysAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,23 +60,31 @@ public class UserActivity extends BaseActivity {
         usersAdapter = new UsersAdapter(this, (baseUser, isLongClick) -> {
             // Do nothing
         });
+
+        daysAdapter = new DaysAdapter(this, (dateTime, isLongClick) -> {
+            // Do nothing
+        });
+
         binding.subjectsGrid.setAdapter(adapter);
-        binding.subjectsGrid.setLayoutManager(new LinearLayoutManager(this));
         binding.subjectsGrid.setItemAnimator(new SlideInItemAnimator());
         binding.subjectsGrid.addItemDecoration(new GridItemDividerDecoration(this, R.dimen.divider_height, R.color.divider));
         binding.subjectsGrid.setHasFixedSize(true);
 
         binding.wardsGrid.setAdapter(usersAdapter);
-        binding.wardsGrid.setLayoutManager(new LinearLayoutManager(this));
         binding.wardsGrid.setItemAnimator(new SlideInItemAnimator());
         binding.wardsGrid.addItemDecoration(new GridItemDividerDecoration(this, R.dimen.divider_height, R.color.divider));
         binding.wardsGrid.setHasFixedSize(true);
+
+        binding.daysGrid.setAdapter(daysAdapter);
+        binding.daysGrid.setItemAnimator(new SlideInItemAnimator());
+        binding.daysGrid.addItemDecoration(new GridItemDividerDecoration(this, R.dimen.divider_height, R.color.divider));
+        binding.daysGrid.setHasFixedSize(true);
 
         if (getIntent().hasExtra(EXTRA_USER)) {
             binding.setUser(getIntent().getParcelableExtra(EXTRA_USER));
             ExtensionUtils.debugLog(this, binding.getUser().getType());
             getRequest(binding.getUser().getKey());
-            if (binding.getUser() instanceof Parent) getWards(binding.getUser().getKey());
+            if (binding.getUser().getType().equals(BaseUser.Type.PARENT)) getWards(binding.getUser().getKey());
         } else if (getIntent().hasExtra(EXTRA_USER_UID)) {
             Snackbar snackbar = Snackbar.make(binding.container, "Fetching user information", Snackbar.LENGTH_INDEFINITE);
             FirebaseDataSource.getUser(this, firestore, getIntent().getStringExtra(EXTRA_USER_UID), getIntent().getStringExtra(EXTRA_USER_TYPE), new AsyncCallback<BaseUser>() {

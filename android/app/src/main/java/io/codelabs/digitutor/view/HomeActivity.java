@@ -1,6 +1,8 @@
 package io.codelabs.digitutor.view;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
@@ -29,15 +32,13 @@ import io.codelabs.digitutor.data.BaseUser;
 import io.codelabs.digitutor.data.model.Parent;
 import io.codelabs.digitutor.databinding.ActivityHomeBinding;
 import io.codelabs.digitutor.view.fragment.*;
-import io.codelabs.digitutor.view.kotlin.AddSubjectActivity;
-import io.codelabs.digitutor.view.kotlin.AssignmentActivity;
-import io.codelabs.digitutor.view.kotlin.MakeComplaintActivity;
-import io.codelabs.digitutor.view.kotlin.SearchActivity;
+import io.codelabs.digitutor.view.kotlin.*;
 import io.codelabs.sdk.glide.GlideApp;
 import io.codelabs.sdk.util.ExtensionUtils;
 import io.codelabs.widget.CircularImageView;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -317,5 +318,20 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             return;
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == WardsActivity.WARD_EXTRA_CODE && resultCode == WardsActivity.WARD_EXTRA_CODE) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+                for (Fragment fragment : fragments) {
+                    if (fragment.getClass().getSimpleName().equals(TimeTableFragment.class.getSimpleName()))
+                        fragment.onActivityResult(requestCode, resultCode, data);
+                }
+            }
+        }
     }
 }

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.transition.TransitionManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import io.codelabs.digitutor.R;
 import io.codelabs.digitutor.core.base.BaseActivity;
@@ -26,6 +25,7 @@ import io.codelabs.digitutor.data.model.Ward;
 import io.codelabs.digitutor.databinding.FragmentTimetableBinding;
 import io.codelabs.digitutor.view.adapter.TimetableAdapter;
 import io.codelabs.digitutor.view.kotlin.AddTimeTableActivity;
+import io.codelabs.digitutor.view.kotlin.WardsActivity;
 import io.codelabs.recyclerview.SlideInItemAnimator;
 import io.codelabs.sdk.glide.GlideApp;
 import io.codelabs.sdk.util.ExtensionUtils;
@@ -94,15 +94,7 @@ public class TimeTableFragment extends Fragment {
                                     ward = wards.get(0);
                                     loadWardInfo(ward);
                                     loadWardTimetable(ward);
-                                    CharSequence[] wardsList = {};
-
-
-                                    binding.pickWard.setOnClickListener(v -> {
-                                        new MaterialAlertDialogBuilder(requireActivity()).setTitle("Select a ward...")
-                                                .setSingleChoiceItems(wardsList, 0, (dialog, which) -> {
-
-                                                }).setNegativeButton("Dismiss", (dialog, which) -> dialog.dismiss()).create().show();
-                                    });
+                                    binding.pickWard.setOnClickListener(v -> ((BaseActivity) requireActivity()).intentTo(WardsActivity.class, WardsActivity.WARD_EXTRA_CODE));
                                 }
                             }
                         }
@@ -196,6 +188,16 @@ public class TimeTableFragment extends Fragment {
             });
         } catch (Exception ex) {
             ExtensionUtils.debugLog(requireContext(), ex.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            ExtensionUtils.debugLog(requireContext(), data != null ? data.getParcelableExtra(WardsActivity.WARD_EXTRA) : null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
