@@ -337,6 +337,25 @@ public final class FirebaseDataSource {
         });
     }
 
+    public static void getReport(Activity host, @NotNull FirebaseFirestore firestore, String reportKey, @NotNull AsyncCallback<Report> callback) {
+        callback.onStart();
+        firestore.collection(Constants.REPORTS)
+                .document(reportKey)
+                .get()
+                .addOnCompleteListener(host, task -> {
+                    if (task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
+                        callback.onSuccess(Objects.requireNonNull(task.getResult()).toObject(Report.class));
+                        callback.onComplete();
+                    } else {
+                        callback.onError(Objects.requireNonNull(task.getException()).getLocalizedMessage());
+                        callback.onComplete();
+                    }
+                }).addOnFailureListener(host, e -> {
+            callback.onError(e.getLocalizedMessage());
+            callback.onComplete();
+        });
+    }
+
     public static void fetchAllSchedules(Activity host, @NotNull FirebaseFirestore firestore, String tutor, @NotNull AsyncCallback<List<Timetable>> callback) {
         callback.onStart();
         firestore.collection(Constants.SCHEDULES)
