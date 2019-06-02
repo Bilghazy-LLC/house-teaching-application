@@ -159,7 +159,19 @@ exports.notifyRequest = functions.firestore.document('requests/{requestId}').onD
                                     type: 'tutor-request-status'
                                 }
                             }).then(response => {
-                                return console.log('Notification sent to tutor successfully');
+                                console.log('Notification sent to tutor successfully');
+
+                                // Send timetable to the wards database
+                                // todo: replace 'parentData.wards[0]' with 'data.timetable.ward'
+                                return admin.firestore().collection(`parents/${parent}/${parentData.wards[0]}/timetables`)
+                                    .doc(data.timetable.key)
+                                    .set(data.timetable)
+                                    .then(() => {
+                                        return console.log('Added to wards timetable successfully');
+                                    }).catch(err => {
+                                        return console.log(err.message);
+
+                                    })
                             }).catch(err => {
                                 if (err) {
                                     return console.log(err);
