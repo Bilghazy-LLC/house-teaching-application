@@ -42,12 +42,6 @@ class TimeTableFragment : Fragment() {
         return binding.root
     }
 
-    override fun setArguments(args: Bundle?) {
-        super.setArguments(args)
-        val ward = args?.getParcelable<Ward?>(WardsActivity.WARD_EXTRA)
-        debugLog("Arguments ward: $ward")
-        if (ward != null) binding.ward = ward
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,6 +65,14 @@ class TimeTableFragment : Fragment() {
             )
         }
     }
+
+    override fun setArguments(args: Bundle?) {
+        super.setArguments(args)
+        val ward = args?.getParcelable<Ward?>(WardsActivity.WARD_EXTRA)
+        debugLog("Arguments ward: $ward")
+        if (ward != null) binding.ward = ward
+    }
+
 
     override fun onResume() {
         super.onResume()
