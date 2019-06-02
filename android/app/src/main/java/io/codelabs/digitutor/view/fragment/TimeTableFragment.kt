@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -139,7 +140,7 @@ class TimeTableFragment : Fragment() {
                             .placeholder(R.drawable.avatar_placeholder)
                             .error(R.drawable.avatar_placeholder)
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                            .into(binding.userAvatar)
+                            .into(binding.userAvatar as ImageView)
                     }
                 }
 
