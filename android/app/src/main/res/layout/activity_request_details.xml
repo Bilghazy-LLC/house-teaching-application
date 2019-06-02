@@ -63,21 +63,21 @@
                                                      android:layout_gravity="center_horizontal"
                                                      android:textAppearance="?textAppearanceBody2"/>
 
-            <io.codelabs.digitutor.view.widget.PreferenceView
+            <io.codelabs.sdk.widget.PreferenceView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/username"
                     app:summary="@{user.name, default=Blessing}"
                     app:icon="@drawable/twotone_account_circle_24px"/>
 
-            <io.codelabs.digitutor.view.widget.PreferenceView
+            <io.codelabs.sdk.widget.PreferenceView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/email_address"
                     app:summary="@{user.email, default=blessingmail}"
                     app:icon="@drawable/twotone_mail_outline_24px"/>
 
-            <io.codelabs.digitutor.view.widget.PreferenceView
+            <io.codelabs.sdk.widget.PreferenceView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/timestamp"
@@ -85,7 +85,7 @@
                     app:icon="@drawable/twotone_calendar_today_24px"/>
 
 
-            <io.codelabs.digitutor.view.widget.PreferenceView
+            <io.codelabs.sdk.widget.PreferenceView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/wards"

@@ -38,14 +38,14 @@
 
          </com.google.android.material.appbar.AppBarLayout>
 
-        <io.codelabs.digitutor.view.widget.PreferenceView
+        <io.codelabs.sdk.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="Message"
                 app:icon="@drawable/twotone_inbox_24px"
                 app:summary="@{feedback.message, default=`This is a dummy text`}"/>
 
-        <io.codelabs.digitutor.view.widget.PreferenceView
+        <io.codelabs.sdk.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="Tutor"

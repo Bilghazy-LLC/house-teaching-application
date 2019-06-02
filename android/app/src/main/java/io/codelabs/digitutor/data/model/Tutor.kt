@@ -20,6 +20,7 @@ data class Tutor(override var email: String?,
                  override var avatar: String?,
                  override var key: String,
                  override var token: String?,
+                 var available: Boolean = true,
                  var blocked: Boolean = false,
                  var rating: Double = 1.0,
                  override var type: String = BaseUser.Type.TUTOR) : BaseUser {

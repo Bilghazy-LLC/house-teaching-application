@@ -27,8 +27,8 @@
     <string name="timestamp">Time sent</string>
     <string name="showing_details_of_parent">Showing details of Parent…</string>
     <string name="wards">Ward(s)</string>
-    <string name="decline_request">Decline Request</string>
-    <string name="accept_request">Accept Request</string>
+    <string name="decline_request">Decline</string>
+    <string name="accept_request">Accept</string>
     <string name="add_assignment">Add Assignment</string>
     <string name="post_assignment">Post Assignment</string>
     <string name="file_format_assignment">Specify details for this assignment

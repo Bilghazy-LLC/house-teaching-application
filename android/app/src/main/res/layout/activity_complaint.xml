@@ -55,19 +55,19 @@
                                                      android:padding="@dimen/spacing_normal"/>
 
 
-            <io.codelabs.digitutor.view.widget.PreferenceView android:layout_width="match_parent"
+            <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
                                                               android:layout_height="wrap_content"
                                                               app:icon="@drawable/twotone_perm_identity_24px"
                                                               app:title="Tutor"
                                                               app:summary="@{tutor.name}"/>
 
-            <io.codelabs.digitutor.view.widget.PreferenceView android:layout_width="match_parent"
+            <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
                                                               android:layout_height="wrap_content"
                                                               app:icon="@drawable/twotone_assignment_turned_in_24px"
                                                               app:title="Description"
                                                               app:summary="@{complaint.description}"/>
 
-            <io.codelabs.digitutor.view.widget.PreferenceView android:layout_width="match_parent"
+            <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
                                                               android:layout_height="wrap_content"
                                                               app:icon="@drawable/twotone_event_24px"
                                                               app:title="Time Sent"

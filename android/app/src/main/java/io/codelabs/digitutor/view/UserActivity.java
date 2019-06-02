@@ -5,9 +5,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import io.codelabs.digitutor.R;
@@ -243,7 +245,17 @@ public class UserActivity extends BaseActivity {
                 bundle.putParcelable(SchedulesActivity.EXTRA_TUTOR, getIntent().getParcelableExtra(EXTRA_USER));
                 bundle.putString(SchedulesActivity.EXTRA_TUTOR_ID, getIntent().getStringExtra(EXTRA_USER_UID));
                 intentTo(SchedulesActivity.class, bundle, false);
+                return true;
+            case R.id.menu_rate_tutor:
+                View v = getLayoutInflater().inflate(R.layout.tutor_ratings, null, false);
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(UserActivity.this).setTitle("Rate tutor")
+                        .setView(v)
+                        .setPositiveButton("Send", (dialog, which) -> {
 
+                        }).setNegativeButton("Dismiss", (dialog, which) -> dialog.dismiss());
+                AlertDialog dialog = builder.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
                 return true;
 
             default:

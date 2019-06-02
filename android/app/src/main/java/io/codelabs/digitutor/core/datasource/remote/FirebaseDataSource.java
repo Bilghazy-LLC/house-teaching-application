@@ -999,7 +999,7 @@ public final class FirebaseDataSource {
 
     }
 
-    public static void getTimetableForUser(BaseActivity host, String ward, AsyncCallback<List<Timetable>> callback) {
+    public static void getTimetableForUser(@NotNull BaseActivity host, String ward, @NotNull AsyncCallback<List<Timetable>> callback) {
         callback.onStart();
         FirebaseFirestore firestore = host.firestore;
         UserSharedPreferences prefs = host.prefs;
@@ -1029,7 +1029,37 @@ public final class FirebaseDataSource {
             callback.onError("Sign in as a parent first");
             callback.onComplete();
         }
+    }
 
+    public static void addTimeTableForWard(@NotNull BaseActivity host,
+                                           String ward,
+                                           String tutor,
+                                           String subject,
+                                           Date day,
+                                           Long time,
+                                           @NotNull AsyncCallback<Void> callback) {
+        callback.onStart();
+        FirebaseFirestore firestore = host.firestore;
+        UserSharedPreferences prefs = host.prefs;
+
+        if (prefs.getType().equals(BaseUser.Type.PARENT)) {
+            DocumentReference document = firestore.collection(String.format(Constants.TIMETABLES, prefs.getKey(), ward)).document();
+            Timetable timetable = new Timetable(document.getId(), ward, tutor, subject, day, time);
+            document.set(timetable).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    callback.onSuccess(null);
+                } else {
+                    callback.onError("Unable to create timetable");
+                }
+                callback.onComplete();
+            }).addOnFailureListener(e -> {
+                callback.onError(e.getLocalizedMessage());
+                callback.onComplete();
+            });
+        } else {
+            callback.onError("Please login as a parent first");
+            callback.onComplete();
+        }
     }
 
     public static void getWard(@NotNull BaseActivity host, String ward, @NotNull AsyncCallback<Ward> callback) {

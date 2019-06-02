@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="tutor" type="io.codelabs.digitutor.data.model.Tutor"/>
+        <variable name="subject" type="io.codelabs.digitutor.data.model.Subject"/>
+        <variable name="ward" type="io.codelabs.digitutor.data.model.Ward"/>
+        <import type="android.view.View"/>
+
+    </data>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".view.kotlin.AddTimeTableActivity"
+            android:id="@+id/container">
+
+
+
+    </FrameLayout>
+</layout>

@@ -27,7 +27,7 @@
                                                      android:ellipsize="end"
                                                      android:text="@{subject.name, default=`English language`}"/>
 
-            <io.codelabs.digitutor.view.widget.PreferenceView android:layout_width="match_parent"
+            <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
                                                               android:layout_height="wrap_content"
                                                               app:title="Day &amp; Time"
                                                               app:icon="@drawable/twotone_event_24px"

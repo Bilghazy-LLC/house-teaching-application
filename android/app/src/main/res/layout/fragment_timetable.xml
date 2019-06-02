@@ -20,11 +20,7 @@
                     android:layout_height="wrap_content"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:background="@color/background_card"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:padding="@dimen/padding_normal">
-
-<!--                app:imageUrl="@{ward.avatar}"-->
-<!--                app:error="@drawable/avatar_placeholder"-->
 
                 <io.codelabs.widget.CircularImageView
                         android:layout_width="@dimen/avatar_bounds"
@@ -41,7 +37,7 @@
                         android:id="@+id/user_name"
                         app:layout_constraintStart_toEndOf="@id/user_avatar"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/add_new_timetable"
                         app:layout_constraintBottom_toBottomOf="@id/user_avatar"
                         android:maxLines="1"
                         android:layout_marginStart="@dimen/padding_normal"
@@ -70,7 +66,24 @@
                         android:textSize="16sp"
                         android:text="@{ward.email, default=`@string/dummy_email`}"/>-->
 
+                <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
+                                                                   android:layout_height="wrap_content"
+                                                                   app:layout_constraintEnd_toEndOf="parent"
+                                                                   app:layout_constraintTop_toTopOf="parent"
+                                                                   app:layout_constraintBottom_toBottomOf="parent"
+                                                                   android:text="Add new"
+                                                                   app:icon="@drawable/twotone_event_24px"
+                                                                   android:id="@+id/add_new_timetable"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:layout_marginStart="@dimen/padding_normal"
+                  android:layout_marginEnd="@dimen/padding_normal"
+                  android:layout_marginTop="@dimen/spacing_micro"
+                  android:layout_marginBottom="@dimen/spacing_micro"
+                  android:background="@color/mid_grey"/>
 
             <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"

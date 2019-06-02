@@ -1,5 +1,6 @@
 package io.codelabs.digitutor.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.transition.TransitionManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.snackbar.Snackbar;
 import io.codelabs.digitutor.R;
 import io.codelabs.digitutor.core.base.BaseActivity;
@@ -22,7 +24,9 @@ import io.codelabs.digitutor.data.model.Timetable;
 import io.codelabs.digitutor.data.model.Ward;
 import io.codelabs.digitutor.databinding.FragmentTimetableBinding;
 import io.codelabs.digitutor.view.adapter.TimetableAdapter;
+import io.codelabs.digitutor.view.kotlin.AddTimeTableActivity;
 import io.codelabs.recyclerview.SlideInItemAnimator;
+import io.codelabs.sdk.glide.GlideApp;
 import io.codelabs.sdk.util.ExtensionUtils;
 
 import java.util.List;
@@ -47,7 +51,6 @@ public class TimeTableFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         adapter = new TimetableAdapter((BaseActivity) requireActivity());
         binding.grid.setAdapter(adapter);
         LinearLayoutManager lm = new LinearLayoutManager(requireContext());
@@ -55,6 +58,15 @@ public class TimeTableFragment extends Fragment {
         binding.grid.setItemAnimator(new SlideInItemAnimator());
         binding.grid.setHasFixedSize(true);
         binding.grid.addItemDecoration(new DividerItemDecoration(requireContext(), lm.getOrientation()));
+        loadDataFromDatabase();
+
+        /// Navigate to add timetable activity
+        binding.addNewTimetable.setOnClickListener(v -> requireActivity().startActivity(new Intent(requireContext(), AddTimeTableActivity.class)));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         loadDataFromDatabase();
     }
 
@@ -108,7 +120,16 @@ public class TimeTableFragment extends Fragment {
 
                 @Override
                 public void onSuccess(@Nullable Ward response) {
-                    if (response != null) binding.setWard(response);
+                    if (response != null) {
+                        binding.setWard(response);
+                        GlideApp.with(host)
+                                .load(response.getAvatar())
+                                .circleCrop()
+                                .placeholder(R.drawable.avatar_placeholder)
+                                .error(R.drawable.avatar_placeholder)
+                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                                .into(binding.userAvatar);
+                    }
                 }
 
                 @Override
