@@ -1,5 +1,6 @@
 package io.codelabs.digitutor.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.widget.RatingBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.core.app.ShareCompat;
 import androidx.databinding.DataBindingUtil;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -256,8 +258,12 @@ public class UserActivity extends BaseActivity {
         MenuItem rateItem = menu.findItem(R.id.menu_rate_tutor);
         if (rateItem != null) rateItem.setVisible(prefs.getType().equals(BaseUser.Type.PARENT));
         MenuItem complaintItem = menu.findItem(R.id.menu_make_complaints);
-        if (complaintItem != null)
+        if (complaintItem != null) {
             complaintItem.setVisible(prefs.getType().equals(BaseUser.Type.PARENT) || prefs.getType().equals(BaseUser.Type.WARD));
+        }
+        MenuItem shareItem = menu.findItem(R.id.menu_recommend);
+        if (shareItem != null)
+            shareItem.setVisible(prefs.getType().equals(BaseUser.Type.PARENT) || prefs.getType().equals(BaseUser.Type.WARD));
         return true;
     }
 
@@ -298,7 +304,16 @@ public class UserActivity extends BaseActivity {
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
                 return true;
-
+            case R.id.menu_recommend:
+                Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                        .setType("text/plain")
+                        .setChooserTitle(String.format("Recommend %s to: ", binding.getUser().getName()))
+                        .setText(String.format(Constants.SHARE_TEXT, binding.getUser().getName(), getString(R.string.home_tutor_name), binding.getUser().getKey()))
+                        .getIntent();
+                if (shareIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(shareIntent);
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

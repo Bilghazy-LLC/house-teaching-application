@@ -29,4 +29,5 @@ public final class Constants {
 
     // Others
     public static final String DEFAULT_AVATAR_URL = "https://firebasestorage.googleapis.com/v0/b/house-teaching.appspot.com/o/default-avatar.png?alt=media&token=b1ab3898-f830-42b6-aa08-18c70627bb87";
+    public static final String SHARE_TEXT = "Follow %s on %s.\n[https://www.example.com/%s]";
 }
