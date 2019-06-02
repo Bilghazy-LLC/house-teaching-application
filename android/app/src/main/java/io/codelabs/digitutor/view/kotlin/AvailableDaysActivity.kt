@@ -1,4 +1,4 @@
-package io.codelabs.digitutor.view
+package io.codelabs.digitutor.view.kotlin
 
 import android.os.Bundle
 import android.view.View

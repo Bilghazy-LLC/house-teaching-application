@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:padding="@dimen/spacing_normal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           app:title="Ward"
+                                           android:id="@+id/ward_pref"
+                                           app:icon="@drawable/twotone_face_24px"
+                                           app:summary="Some name"/>
+
+
+    <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           app:title="Subject"
+                                           android:id="@+id/subject_pref"
+                                           app:icon="@drawable/twotone_receipt_24px"
+                                           app:summary="English Language"/>
+
+
+    <io.codelabs.widget.BaselineGridTextView android:layout_width="wrap_content"
+                                             android:layout_height="wrap_content"
+                                             android:text="Allocate Marks"
+                                             android:layout_marginStart="@dimen/padding_normal"
+                                             android:layout_marginTop="@dimen/padding_normal"
+                                             android:layout_marginBottom="@dimen/spacing_normal"
+                                             android:textAppearance="?textAppearanceBody1"/>
+
+    <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+                                                           android:layout_height="wrap_content"
+                                                           android:layout_marginStart="@dimen/padding_normal"
+                                                           android:layout_marginEnd="@dimen/padding_normal"
+                                                           android:hint="Marks">
+
+        <com.google.android.material.textfield.TextInputEditText android:layout_width="match_parent"
+                                                                 android:layout_height="wrap_content"
+                                                                 android:inputType="number"
+                                                                 android:maxLength="3"
+                                                                 android:id="@+id/marks"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

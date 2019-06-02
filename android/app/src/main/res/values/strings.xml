@@ -56,4 +56,5 @@
     <string name="do_not_have_lessons">You do not have lectures today</string>
     <string name="notification_title">Lesson Reminder</string>
     <string name="assignments">Ward\'s Assignments</string>
+    <string name="reports">Progress Report</string>
 </resources>

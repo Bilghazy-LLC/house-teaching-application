@@ -1,4 +1,4 @@
-package io.codelabs.digitutor.view
+package io.codelabs.digitutor.view.kotlin
 
 import android.content.Intent
 import android.net.Uri
@@ -36,11 +36,14 @@ class WardAssignmentActivity : BaseActivity() {
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
         setSupportActionBar(binding.toolbar)
 
-        adapter = AssignmentAdapter(this, OnClickListener { item, _ ->
-            if (prefs.type == BaseUser.Type.TUTOR) {
-                toast(item.comment)
-            }
-        })
+
+        adapter = AssignmentAdapter(
+            this,
+            OnClickListener { item, _ ->
+                if (prefs.type == BaseUser.Type.TUTOR) {
+                    toast(item.comment)
+                }
+            })
         binding.grid.adapter = adapter
         binding.grid.itemAnimator = SlideInItemAnimator()
         val lm = LinearLayoutManager(this).also {
@@ -124,7 +127,8 @@ class WardAssignmentActivity : BaseActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             return when (viewType) {
-                EMPTY -> EmptyViewHolder(inflater.inflate(EMPTY, parent, false))
+                EMPTY -> EmptyViewHolder(inflater.inflate(
+                    EMPTY, parent, false))
                 DATA -> AssignmentViewholder(
                     DataBindingUtil.inflate(
                         inflater,

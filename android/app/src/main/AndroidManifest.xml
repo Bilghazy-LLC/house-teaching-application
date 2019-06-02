@@ -74,8 +74,9 @@
         <activity android:name=".view.kotlin.AddTimeTableActivity"/>
         <activity android:name=".view.kotlin.WardsActivity"/>
         <activity android:name=".view.TimeTableActivity"/>
-        <activity android:name=".view.AvailableDaysActivity"/>
-        <activity android:name=".view.WardAssignmentActivity"/>
+        <activity android:name=".view.kotlin.AvailableDaysActivity"/>
+        <activity android:name=".view.kotlin.WardAssignmentActivity"/>
+        <activity android:name=".view.kotlin.ReportActivity"/>
 
         <service
                 android:name=".core.notification.AppMessagingService"

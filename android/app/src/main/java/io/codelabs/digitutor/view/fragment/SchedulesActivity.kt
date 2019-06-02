@@ -20,7 +20,7 @@ import io.codelabs.digitutor.data.BaseUser
 import io.codelabs.digitutor.data.model.*
 import io.codelabs.digitutor.databinding.ActivitySchedulesBinding
 import io.codelabs.digitutor.databinding.ItemScheduleBinding
-import io.codelabs.digitutor.view.AvailableDaysActivity
+import io.codelabs.digitutor.view.kotlin.AvailableDaysActivity
 import io.codelabs.digitutor.view.adapter.TimetableAdapter
 import io.codelabs.digitutor.view.adapter.viewholder.EmptyViewHolder
 import io.codelabs.recyclerview.SlideInItemAnimator

@@ -28,10 +28,7 @@ import io.codelabs.digitutor.data.BaseUser;
 import io.codelabs.digitutor.data.model.Parent;
 import io.codelabs.digitutor.databinding.ActivityHomeBinding;
 import io.codelabs.digitutor.view.fragment.*;
-import io.codelabs.digitutor.view.kotlin.AddSubjectActivity;
-import io.codelabs.digitutor.view.kotlin.AssignmentActivity;
-import io.codelabs.digitutor.view.kotlin.MakeComplaintActivity;
-import io.codelabs.digitutor.view.kotlin.SearchActivity;
+import io.codelabs.digitutor.view.kotlin.*;
 import io.codelabs.sdk.glide.GlideApp;
 import io.codelabs.sdk.util.ExtensionUtils;
 import io.codelabs.widget.CircularImageView;
@@ -286,6 +283,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.menu_assignments:
                 intentTo(WardAssignmentActivity.class);
+                break;
+            case R.id.menu_students:
+                Bundle bundle = new Bundle(0);
+//                bundle.putString(WardsActivity.WARD_EXTRA, );
+                intentTo(WardsActivity.class, bundle, false);
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -26,6 +26,12 @@
             android:icon="@drawable/twotone_inbox_24px"/>
 
     <item
+            android:title="Student(s)"
+            app:showAsAction="never"
+            android:id="@+id/menu_students"
+            android:icon="@drawable/twotone_supervisor_account_24px"/>
+
+    <item
             android:id="@+id/menu_tutor_requests"
             android:title="Job Requests"
             app:showAsAction="never"
