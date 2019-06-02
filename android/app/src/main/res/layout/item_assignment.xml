@@ -9,7 +9,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_micro"
+            android:layout_marginBottom="@dimen/spacing_normal"
             android:padding="@dimen/padding_normal">
 
         <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"

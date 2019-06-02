@@ -13,6 +13,8 @@ import io.codelabs.digitutor.R
 import io.codelabs.digitutor.core.base.BaseActivity
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource
 import io.codelabs.digitutor.core.util.AsyncCallback
+import io.codelabs.digitutor.core.util.OnClickListener
+import io.codelabs.digitutor.data.BaseUser
 import io.codelabs.digitutor.data.model.Assignment
 import io.codelabs.digitutor.data.model.Subject
 import io.codelabs.digitutor.data.model.Tutor
@@ -21,6 +23,7 @@ import io.codelabs.digitutor.databinding.ItemAssignmentBinding
 import io.codelabs.digitutor.view.adapter.viewholder.EmptyViewHolder
 import io.codelabs.recyclerview.SlideInItemAnimator
 import io.codelabs.sdk.util.debugLog
+import io.codelabs.sdk.util.toast
 
 class WardAssignmentActivity : BaseActivity() {
 
@@ -33,7 +36,11 @@ class WardAssignmentActivity : BaseActivity() {
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
         setSupportActionBar(binding.toolbar)
 
-        adapter = AssignmentAdapter(this)
+        adapter = AssignmentAdapter(this, OnClickListener { item, _ ->
+            if (prefs.type == BaseUser.Type.TUTOR) {
+                toast(item.comment)
+            }
+        })
         binding.grid.adapter = adapter
         binding.grid.itemAnimator = SlideInItemAnimator()
         val lm = LinearLayoutManager(this).also {
@@ -102,7 +109,10 @@ class WardAssignmentActivity : BaseActivity() {
     }
 
 
-    class AssignmentAdapter constructor(private val context: BaseActivity) :
+    class AssignmentAdapter constructor(
+        private val context: BaseActivity,
+        private val listener: OnClickListener<Assignment>
+    ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val inflater: LayoutInflater = LayoutInflater.from(context)
         private val dataSource: MutableList<Assignment> = mutableListOf()
@@ -146,6 +156,7 @@ class WardAssignmentActivity : BaseActivity() {
                 override fun onSuccess(response: Subject?) {
                     if (response != null) {
                         holder.bind(response, assignment)
+                        holder.binding.root.setOnClickListener { listener.onClick(assignment, false) }
                         holder.binding.download.setOnClickListener {
                             context.startActivity(Intent(Intent.ACTION_VIEW).apply {
                                 data = Uri.parse(assignment.filePath)
