@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="tutor" type="io.codelabs.digitutor.data.BaseUser"/>
         <variable name="subject" type="io.codelabs.digitutor.data.model.Subject"/>
     </data>
-    <LinearLayout
+    <io.codelabs.widget.ForegroundLinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    </LinearLayout>
+        <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               app:title="Tutor"
+                                               app:summary="@{tutor.name, default=`Dummy name`}"
+                                               app:icon="@drawable/twotone_group_24px"/>
+
+        <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               app:title="Subject"
+                                               app:summary="@{subject.name, default=`Maths`}"
+                                               app:icon="@drawable/twotone_receipt_24px"/>
+
+
+
+    </io.codelabs.widget.ForegroundLinearLayout>
 </layout>

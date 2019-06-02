@@ -266,9 +266,6 @@ public class UserActivity extends BaseActivity {
 
                 intentTo(SchedulesActivity.class, bundle, false);
                 return true;
-            case R.id.menu_tutor_reports:
-//                addFragment(new ReportsFragment());
-                break;
             case R.id.menu_rate_tutor:
                 View v = getLayoutInflater().inflate(R.layout.tutor_ratings, null, false);
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(UserActivity.this).setTitle("Rate tutor")

@@ -2,6 +2,7 @@ package io.codelabs.digitutor.view.kotlin
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -12,6 +13,7 @@ import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource
 import io.codelabs.digitutor.core.util.AsyncCallback
 import io.codelabs.digitutor.core.util.Constants
 import io.codelabs.digitutor.data.BaseUser
+import io.codelabs.digitutor.data.model.Report
 import io.codelabs.digitutor.data.model.Ward
 import io.codelabs.digitutor.databinding.ActivityWardsBinding
 import io.codelabs.digitutor.view.adapter.UsersAdapter
@@ -31,7 +33,7 @@ class WardsActivity : BaseActivity() {
 
         val adapter = UsersAdapter(applicationContext) { item, _ ->
             if (prefs.type == BaseUser.Type.TUTOR) {
-                //todo: update progress report
+
                 val v = layoutInflater.inflate(R.layout.dialog_progress_update, null, false)
                 MaterialDialog(this).show {
                     title(text = "Student progress report")
@@ -39,7 +41,13 @@ class WardsActivity : BaseActivity() {
                     positiveButton(text = "Send") {
                         it.dismiss()
 
-                        firestore.collection(Constants.REPORTS)
+                        //todo: update progress report
+                        val document = firestore.collection(Constants.REPORTS).document()
+                        val report = Report(
+                            document.id, "dummy", "dummy", "dummy", "dummy",
+                            v.findViewById<EditText>(R.id.marks).text.toString().toInt()
+                        )
+                        document.set(report).addOnCompleteListener { }.addOnFailureListener { }
                     }
                 }
             } else {

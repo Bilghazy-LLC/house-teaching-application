@@ -16,6 +16,12 @@
         android:icon="@drawable/twotone_book_24px" />
 
     <item
+            android:id="@+id/menu_tutor_reports"
+            android:title="View Reports"
+            app:showAsAction="never"
+            android:icon="@drawable/twotone_receipt_24px" />
+
+    <item
         android:id="@+id/menu_tutor_feedback"
         android:title="Tutor Feedback"
         app:showAsAction="never"
