@@ -272,10 +272,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 binding.toolbar.setTitle(getString(R.string.complaints));
                 addFragment(new ComplaintsFragment());
                 break;
-            case R.id.menu_tutor_reports:
-                binding.toolbar.setTitle(getString(R.string.reports));
-                addFragment(new ReportsFragment());
-                break;
             case R.id.menu_subjects:
                 intentTo(AddSubjectActivity.class);
                 break;

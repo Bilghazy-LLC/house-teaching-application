@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionManager
 import io.codelabs.digitutor.R
 import io.codelabs.digitutor.core.base.BaseActivity
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource
@@ -16,12 +19,16 @@ import io.codelabs.digitutor.data.model.Subject
 import io.codelabs.digitutor.databinding.FragmentWithListBinding
 import io.codelabs.digitutor.databinding.ItemReportBinding
 import io.codelabs.digitutor.view.adapter.viewholder.EmptyViewHolder
+import io.codelabs.recyclerview.SlideInItemAnimator
 import io.codelabs.sdk.util.debugLog
+import io.codelabs.sdk.util.toast
 import io.codelabs.sdk.view.BaseFragment
 
 class ReportsFragment : BaseFragment() {
 
     private var binding: FragmentWithListBinding? = null
+    private lateinit var adapter: ReportAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_with_list, container, false)
         return binding?.root
@@ -30,7 +37,48 @@ class ReportsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.grid
+        adapter = ReportAdapter(requireActivity() as BaseActivity)
+        binding?.grid?.adapter = adapter
+        val lm = LinearLayoutManager(requireContext())
+        binding?.grid?.layoutManager = lm
+        binding?.grid?.itemAnimator = SlideInItemAnimator()
+        binding?.grid?.setHasFixedSize(true)
+        binding?.grid?.addItemDecoration(DividerItemDecoration(requireContext(), lm.orientation))
+        loadDataFromDatabase()
+    }
+
+    private fun loadDataFromDatabase() {
+        FirebaseDataSource.getReports(
+            activity,
+            (requireActivity() as BaseActivity).firestore,
+            "", /*todo: add tutor*/
+            "", /*todo: add ward*/
+            object : AsyncCallback<MutableList<Report>?> {
+                override fun onStart() {
+                    TransitionManager.beginDelayedTransition(binding!!.fragmentContainer)
+                    binding?.loading?.visibility = View.VISIBLE
+                    binding?.grid?.visibility = View.GONE
+                }
+
+                override fun onComplete() {
+                    TransitionManager.beginDelayedTransition(binding!!.fragmentContainer)
+                    binding?.loading?.visibility = View.GONE
+                    binding?.grid?.visibility = View.VISIBLE
+                }
+
+                override fun onSuccess(response: MutableList<Report>?) {
+                    if (response != null) {
+                        adapter.addData(response)
+                    }
+                }
+
+                override fun onError(error: String?) {
+                    TransitionManager.beginDelayedTransition(binding!!.fragmentContainer)
+                    binding?.grid?.visibility = View.VISIBLE
+                    binding?.loading?.visibility = View.GONE
+                    requireContext().toast(error, true)
+                }
+            })
     }
 
 

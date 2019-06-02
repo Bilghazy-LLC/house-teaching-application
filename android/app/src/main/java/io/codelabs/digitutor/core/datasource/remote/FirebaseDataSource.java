@@ -359,8 +359,9 @@ public final class FirebaseDataSource {
     public static void getReports(Activity host, @NotNull FirebaseFirestore firestore, String tutor, String ward, @NotNull AsyncCallback<List<Report>> callback) {
         callback.onStart();
         firestore.collection(Constants.REPORTS)
-                .whereEqualTo("tutor", tutor)
-                .whereEqualTo("ward", ward)
+                /*todo: add query constraints*/
+//                .whereEqualTo("tutor", tutor)
+//                .whereEqualTo("ward", ward)
                 .get()
                 .addOnCompleteListener(host, task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
