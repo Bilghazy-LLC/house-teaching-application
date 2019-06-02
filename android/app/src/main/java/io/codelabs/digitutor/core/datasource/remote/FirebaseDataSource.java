@@ -777,6 +777,7 @@ public final class FirebaseDataSource {
                                       String comment,
                                       String filePath,
                                       @Nullable String ward,
+                                      @Nullable String parent,
                                       String subject,
                                       long startDate,
                                       long endDate,
@@ -799,7 +800,7 @@ public final class FirebaseDataSource {
                     }
 
                     DocumentReference document = firestore.collection(String.format(Constants.ASSIGNMENTS, prefs.getKey())).document();
-                    Assignment assignment = new Assignment(document.getId(), ward, comment, response, subject, startDate, endDate);
+                    Assignment assignment = new Assignment(document.getId(), ward, comment, response, subject, startDate, endDate, parent);
                     ExtensionUtils.debugLog("Assignment sent as: ", assignment);
                     document.set(assignment).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {

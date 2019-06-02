@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
@@ -28,9 +27,7 @@ import io.codelabs.recyclerview.GridItemDividerDecoration
 import io.codelabs.recyclerview.SlideInItemAnimator
 import io.codelabs.sdk.util.debugLog
 import io.codelabs.sdk.util.toast
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * Assignments screen
@@ -47,6 +44,7 @@ class AssignmentActivity : BaseActivity() {
     private var startDate: Long? = null
     private var endDate: Long? = null
     private var subject: Subject? = null
+    private val parents: MutableList<Parent> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,24 +70,29 @@ class AssignmentActivity : BaseActivity() {
         binding.wardsGrid.setHasFixedSize(true)
         FirebaseDataSource.getAllClients(this, firestore, prefs, object : AsyncCallback<MutableList<Parent>?> {
             override fun onSuccess(response: MutableList<Parent>?) {
+                if (response != null) parents.addAll(response.toMutableList())
+
                 response?.forEach {
-                    FirebaseDataSource.getWards(this@AssignmentActivity, it.key, object: AsyncCallback<MutableList<Ward>?> {
-                        override fun onSuccess(wardResponse: MutableList<Ward>?) {
-                            if (wardResponse != null) adapter.addData(wardResponse)
-                        }
+                    FirebaseDataSource.getWards(
+                        this@AssignmentActivity,
+                        it.key,
+                        object : AsyncCallback<MutableList<Ward>?> {
+                            override fun onSuccess(wardResponse: MutableList<Ward>?) {
+                                if (wardResponse != null) adapter.addData(wardResponse)
+                            }
 
-                        override fun onComplete() {
+                            override fun onComplete() {
 
-                        }
+                            }
 
-                        override fun onError(error: String?) {
+                            override fun onError(error: String?) {
 
-                        }
+                            }
 
-                        override fun onStart() {
+                            override fun onStart() {
 
-                        }
-                    })
+                            }
+                        })
                 }
             }
 
@@ -179,32 +182,37 @@ class AssignmentActivity : BaseActivity() {
 
     private fun post(subject: Subject) {
         ioScope.launch {
-            FirebaseDataSource.sendAssignment(firestore,
-                storage,
-                prefs,
-                binding.comments.text.toString(),
-                filePath.toString(),
-                ward,
-                subject.key,
-                startDate!!,
-                endDate!!,
-                object : AsyncCallback<Void?> {
-                    override fun onSuccess(response: Void?) {
-                        debugLog("Assignment uploaded successfully")
-                    }
+            parents.forEach {
+                if (it.wards.contains(ward)) {
+                    FirebaseDataSource.sendAssignment(firestore,
+                        storage,
+                        prefs,
+                        binding.comments.text.toString(),
+                        filePath.toString(),
+                        ward,
+                        it.key,
+                        subject.key,
+                        startDate!!,
+                        endDate!!,
+                        object : AsyncCallback<Void?> {
+                            override fun onSuccess(response: Void?) {
+                                debugLog("Assignment uploaded successfully")
+                            }
 
-                    override fun onComplete() {
+                            override fun onComplete() {
 
-                    }
+                            }
 
-                    override fun onError(error: String?) {
-                        debugLog(error)
-                    }
+                            override fun onError(error: String?) {
+                                debugLog(error)
+                            }
 
-                    override fun onStart() {
-                        debugLog("Sending assignment to ward")
-                    }
-                })
+                            override fun onStart() {
+                                debugLog("Sending assignment to ward")
+                            }
+                        })
+                }
+            }
         }
         finishAfterTransition()
     }

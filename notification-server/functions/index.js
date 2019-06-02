@@ -238,7 +238,7 @@ exports.wardAssignment = functions.firestore.document('tutors/{tutorId}/assignme
     var assignmentId = context.params.assignmentId;
     var tutorId = context.params.tutorId;
 
-    var parent = change.data().ward;
+    var parent = change.data().parent;
     console.log(`Parent UID: ${parent}`);
 
     if (parent) {

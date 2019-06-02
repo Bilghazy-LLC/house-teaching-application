@@ -11,7 +11,8 @@ data class Assignment(
     var filePath: String,
     val subject: String,
     val dateGiven: Long,
-    val dateDue: Long
+    val dateDue: Long,
+    val parent: String? = null
 ) : BaseDataModel {
 
     constructor() : this("", "", "", "", "", 0L, 0L)
