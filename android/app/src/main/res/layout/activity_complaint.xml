@@ -3,9 +3,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable name="complaint" type="io.codelabs.digitutor.data.model.Complaint"/>
-        <variable name="tutor" type="io.codelabs.digitutor.data.BaseUser"/>
+        <variable name="parent" type="io.codelabs.digitutor.data.BaseUser"/>
         <import type="android.text.format.DateUtils"/>
     </data>
     <FrameLayout
@@ -58,8 +57,8 @@
             <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
                                                               android:layout_height="wrap_content"
                                                               app:icon="@drawable/twotone_perm_identity_24px"
-                                                              app:title="Tutor"
-                                                              app:summary="@{tutor.name}"/>
+                                                              app:title="Parent"
+                                                              app:summary="@{parent.name}"/>
 
             <io.codelabs.sdk.widget.PreferenceView android:layout_width="match_parent"
                                                               android:layout_height="wrap_content"

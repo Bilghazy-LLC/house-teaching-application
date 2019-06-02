@@ -55,7 +55,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         setSupportActionBar(binding.bottomAppBar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawer, binding.bottomAppBar, R.string.open_drawer, R.string.close_drawer);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawer, binding.toolbar, R.string.open_drawer, R.string.close_drawer);
         binding.drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -161,50 +161,53 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         type.setText(String.format("Logged in as: %s", prefs.getType()));
 
         // Get user information after some delay. this is to help resolve the issue of not finding the user's key in time
-        new Handler().postDelayed(() -> {
-            try {
-                FirebaseDataSource.getCurrentUser(this, firestore, prefs, new AsyncCallback<BaseUser>() {
-                    @Override
-                    public void onError(@Nullable String error) {
-                        ExtensionUtils.toast(HomeActivity.this, error, true);
+        try {
+            FirebaseDataSource.getCurrentUser(this, firestore, prefs, new AsyncCallback<BaseUser>() {
+                @Override
+                public void onError(@Nullable String error) {
+                    ExtensionUtils.toast(HomeActivity.this, error, true);
+                }
+
+                @Override
+                public void onSuccess(@Nullable BaseUser response) {
+                    if (response == null) {
+                        ExtensionUtils.toast(HomeActivity.this, "Cannot find this user. PLease re-authenticate this account", true);
+                        return;
                     }
 
-                    @Override
-                    public void onSuccess(@Nullable BaseUser response) {
-                        if (response == null) {
-                            ExtensionUtils.toast(HomeActivity.this, "Cannot find this user. PLease re-authenticate this account", true);
-                            return;
-                        }
+                    // Load user's profile image with Glide
+                    GlideApp.with(HomeActivity.this)
+                            .load(response.getAvatar() == null || TextUtils.isEmpty(response.getAvatar()) ? Constants.DEFAULT_AVATAR_URL : response.getAvatar())
+                            .circleCrop()
+                            .placeholder(R.drawable.avatar_placeholder)
+                            .error(R.drawable.ic_player)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                            .transition(withCrossFade())
+                            .into(avatar);
 
-                        // Load user's profile image with Glide
-                        GlideApp.with(HomeActivity.this)
-                                .load(response.getAvatar() == null || TextUtils.isEmpty(response.getAvatar()) ? Constants.DEFAULT_AVATAR_URL : response.getAvatar())
-                                .circleCrop()
-                                .placeholder(R.drawable.avatar_placeholder)
-                                .error(R.drawable.ic_player)
-                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                                .transition(withCrossFade())
-                                .into(avatar);
+                    username.setText(response.getName());
+                    type.setText(/*String.format("Logged in as: %s", response.getType().toLowerCase())*/ response.getEmail());
+                    ExtensionUtils.debugLog(HomeActivity.this, response);
 
-                        username.setText(response.getName());
-                        type.setText(/*String.format("Logged in as: %s", response.getType().toLowerCase())*/ response.getEmail());
-                        ExtensionUtils.debugLog(HomeActivity.this, response);
-                    }
+                    Bundle bundle = new Bundle(0);
+                    bundle.putParcelable(UserActivity.EXTRA_USER, response);
+                    bundle.putString(UserActivity.EXTRA_USER_TYPE, response.getType());
+                    headerView.setOnClickListener(v -> intentTo(UserActivity.class, bundle, false));
+                }
 
-                    @Override
-                    public void onStart() {
+                @Override
+                public void onStart() {
 
-                    }
+                }
 
-                    @Override
-                    public void onComplete() {
+                @Override
+                public void onComplete() {
 
-                    }
-                });
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }, 1500);
+                }
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void showDialog() {

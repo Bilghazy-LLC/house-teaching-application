@@ -1095,7 +1095,6 @@ public final class FirebaseDataSource {
                 .get()
                 .addOnCompleteListener(host, task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
-                        ExtensionUtils.debugLog(host, task.getResult().getDocuments());
                         List<Ward> wards = task.getResult().toObjects(Ward.class);
                         callback.onSuccess(wards);
                         callback.onComplete();

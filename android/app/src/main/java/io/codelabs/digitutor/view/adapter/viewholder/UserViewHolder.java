@@ -15,7 +15,6 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
     public BaselineGridTextView username, info;
     public AppCompatRatingBar ratingBar;
 
-
     public UserViewHolder(@NonNull View itemView) {
         super(itemView);
         this.avatar = itemView.findViewById(R.id.user_avatar);

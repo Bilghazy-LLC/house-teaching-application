@@ -32,8 +32,8 @@ public class ComplaintActivity extends BaseActivity {
     }
 
     private void loadTutor() {
-        Snackbar snackbar = Snackbar.make(binding.container, "Fetching Tutor information", Snackbar.LENGTH_LONG);
-        FirebaseDataSource.getUser(this, firestore, binding.getComplaint().getTutor(), BaseUser.Type.TUTOR, new AsyncCallback<BaseUser>() {
+        Snackbar snackbar = Snackbar.make(binding.container, "Fetching Parent information", Snackbar.LENGTH_LONG);
+        FirebaseDataSource.getUser(this, firestore, binding.getComplaint().getParent(), BaseUser.Type.PARENT, new AsyncCallback<BaseUser>() {
             @Override
             public void onError(@Nullable String error) {
                 snackbar.setText(Objects.requireNonNull(error)).show();
@@ -42,7 +42,7 @@ public class ComplaintActivity extends BaseActivity {
             @Override
             public void onSuccess(@Nullable BaseUser response) {
                 if (response != null) {
-                    binding.setTutor(response);
+                    binding.setParent(response);
                 }
             }
 

@@ -15,6 +15,7 @@ import io.codelabs.digitutor.data.model.Tutor;
 import io.codelabs.digitutor.view.adapter.viewholder.EmptyViewHolder;
 import io.codelabs.digitutor.view.adapter.viewholder.UserViewHolder;
 import io.codelabs.sdk.glide.GlideApp;
+import io.codelabs.sdk.util.ExtensionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,8 +72,10 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder.ratingBar.setVisibility(View.VISIBLE);
             holder.ratingBar.setRating(Float.parseFloat(String.valueOf(((Tutor) user).getRating())));
         } else holder.ratingBar.setVisibility(View.GONE);
+
+
         holder.username.setText(user.getName());
-        holder.info.setText(user.getEmail()); // TODO: 005 05.05.19 Get additional information about this parent (Like date added and so on)
+        holder.info.setText(user.getEmail());
 
         // Load profile image
         GlideApp.with(context)
@@ -84,6 +87,9 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 .error(R.drawable.ic_player)
                 .transition(withCrossFade())
                 .into(holder.avatar);
+
+        holder.username.setText(user.getName());
+        holder.info.setText(user.getEmail());
 
         holder.itemView.setOnLongClickListener(v -> {
             listener.onClick(user, true);

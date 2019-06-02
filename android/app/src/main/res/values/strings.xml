@@ -53,4 +53,6 @@
     <string name="clients">All parents</string>
     <string name="search_prompt">Search tutors &amp; Subjects from here</string>
     <string name="available_days">Available Days</string>
+    <string name="do_not_have_lessons">You do not have lectures today</string>
+    <string name="notification_title">Lesson Reminder</string>
 </resources>
