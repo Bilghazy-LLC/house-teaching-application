@@ -10,19 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.google.android.material.snackbar.Snackbar
 import io.codelabs.digitutor.R
 import io.codelabs.digitutor.core.base.BaseActivity
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource
 import io.codelabs.digitutor.core.util.AsyncCallback
 import io.codelabs.digitutor.data.BaseUser
-import io.codelabs.digitutor.data.model.DateTime
-import io.codelabs.digitutor.data.model.Schedule
-import io.codelabs.digitutor.data.model.Subject
-import io.codelabs.digitutor.data.model.Tutor
+import io.codelabs.digitutor.data.model.*
 import io.codelabs.digitutor.databinding.ActivitySchedulesBinding
 import io.codelabs.digitutor.databinding.ItemScheduleBinding
+import io.codelabs.digitutor.view.AvailableDaysActivity
+import io.codelabs.digitutor.view.adapter.TimetableAdapter
 import io.codelabs.digitutor.view.adapter.viewholder.EmptyViewHolder
 import io.codelabs.recyclerview.SlideInItemAnimator
 import io.codelabs.sdk.util.debugLog
@@ -39,7 +37,7 @@ class SchedulesActivity : BaseActivity() {
     private var ward: String = ""
     private val subjects = mutableListOf<Subject>()
     private val names = mutableListOf<String>()
-    private lateinit var adapter: ScheduleAdapter
+    private lateinit var adapter: TimetableAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +49,7 @@ class SchedulesActivity : BaseActivity() {
         debugLog("User is tutor: " + binding.isTutor)
 
         // Setup recyclerview
-        adapter = ScheduleAdapter(this)
+        adapter = TimetableAdapter(this)
         binding.schedulesGrid.setHasFixedSize(false)
         binding.schedulesGrid.adapter = adapter
         val lm = LinearLayoutManager(this)
@@ -63,7 +61,7 @@ class SchedulesActivity : BaseActivity() {
     }
 
     fun pickSchedule(view: View) {
-        MaterialDialog(this).show {
+        /*MaterialDialog(this).show {
             title(text = "Select a subject")
             listItemsSingleChoice(items = names, waitForPositiveButton = false) { dialog, index, _ ->
                 dialog.dismiss()
@@ -90,7 +88,8 @@ class SchedulesActivity : BaseActivity() {
             }
             cancelable(true)
             cancelOnTouchOutside(false)
-        }
+        }*/
+        intentTo(AvailableDaysActivity::class.java)
     }
 
     private fun pickEndDate() {
@@ -123,7 +122,7 @@ class SchedulesActivity : BaseActivity() {
                         ),
                         object : AsyncCallback<Void?> {
                             override fun onSuccess(response: Void?) {
-                                FirebaseDataSource.postSchedule(
+                                /*FirebaseDataSource.postSchedule(
                                     this@SchedulesActivity,
                                     ward,
                                     subject.key,
@@ -145,7 +144,7 @@ class SchedulesActivity : BaseActivity() {
 
                                         override fun onStart() {
                                         }
-                                    })
+                                    })*/
                                 finishAfterTransition()
                             }
 
@@ -174,9 +173,9 @@ class SchedulesActivity : BaseActivity() {
                 ?: intent.getParcelableExtra<BaseUser>(
                     EXTRA_TUTOR
                 ).key,
-            object : AsyncCallback<MutableList<Schedule>?> {
+            object : AsyncCallback<MutableList<Timetable>?> {
 
-                override fun onSuccess(response: MutableList<Schedule>?) {
+                override fun onSuccess(response: MutableList<Timetable>?) {
                     debugLog("Schedules: $response")
                     if (response != null) adapter.addData(response)
                 }

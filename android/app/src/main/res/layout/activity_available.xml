@@ -1,8 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.codelabs.widget.ForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="match_parent"
-                                           android:orientation="vertical"
-                                           android:id="@+id/container">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="loaded" type="Boolean"/>
+        <import type="android.view.View"/>
+    </data>
+    <io.codelabs.widget.ForegroundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/container">
 
-</io.codelabs.widget.ForegroundLinearLayout>
+        <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:id="@+id/app_bar"
+                style="?appBarLayoutStyle"
+                android:layout_height="@dimen/shot_collapsed_app_bar_height">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_scrollFlags="exitUntilCollapsed|scroll"
+                    app:title="@string/available_days"
+                    app:contentScrim="@color/scrim"
+                    android:id="@+id/collapsing_toolbar"
+                    app:toolbarId="@id/toolbar">
+
+                <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"
+                        app:navigationIcon="@drawable/ic_back_light"
+                        android:id="@+id/toolbar"/>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <include layout="@layout/loading"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:visibility="@{loaded ? View.GONE : View.VISIBLE, default=`visible`}"
+                 android:id="@+id/loading"/>
+
+       <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+                                              android:layout_height="match_parent">
+
+           <LinearLayout android:layout_width="match_parent"
+                         android:orientation="vertical"
+                         android:visibility="@{loaded ? View.VISIBLE : View.GONE, default=`gone`}"
+                         android:padding="@dimen/padding_large"
+                         android:layout_height="wrap_content">
+
+               <io.codelabs.widget.BaselineGridTextView android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:padding="@dimen/spacing_micro"
+                                                        android:text="Day of Week"
+                                                        android:textAppearance="?textAppearanceBody1"/>
+
+               <Spinner android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/av_dow"
+                        android:prompt="@string/select_filter"
+                        android:spinnerMode="dropdown"/>
+
+               <io.codelabs.widget.BaselineGridTextView android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:padding="@dimen/spacing_micro"
+                                                        android:text="Start Time"
+                                                        android:layout_marginTop="@dimen/padding_normal"
+                                                        android:textAppearance="?textAppearanceBody1"/>
+
+               <Spinner android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/av_start"
+                        android:prompt="@string/select_filter"
+                        android:spinnerMode="dropdown"/>
+
+               <io.codelabs.widget.BaselineGridTextView android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:padding="@dimen/spacing_micro"
+                                                        android:text="End Time"
+                                                        android:layout_marginTop="@dimen/padding_normal"
+                                                        android:textAppearance="?textAppearanceBody1"/>
+
+               <Spinner android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/av_end"
+                        android:prompt="@string/select_filter"
+                        android:spinnerMode="dropdown"/>
+
+               <View android:layout_width="match_parent"
+                     android:layout_height="1dp"
+                     android:background="@color/mid_grey"
+                     android:layout_marginTop="@dimen/spacing_micro"
+                     android:layout_marginBottom="@dimen/spacing_micro"/>
+
+               <io.codelabs.widget.BaselineGridTextView android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:padding="@dimen/spacing_micro"
+                                                        android:text="Subject(s)"
+                                                        android:layout_marginTop="@dimen/padding_normal"
+                                                        android:textAppearance="?textAppearanceBody1"/>
+
+               <Spinner android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/av_subject"
+                        android:prompt="@string/select_filter"
+                        android:spinnerMode="dropdown"/>
+
+               <!--<io.codelabs.widget.BaselineGridTextView android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:padding="@dimen/spacing_micro"
+                                                        android:text="Tutor"
+                                                        android:layout_marginTop="@dimen/padding_normal"
+                                                        android:textAppearance="?textAppearanceBody1"/>
+
+               <Spinner android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/av_tutors"
+                        android:prompt="@string/select_filter"
+                        android:spinnerMode="dropdown"/>-->
+
+               <com.google.android.material.button.MaterialButton android:layout_width="wrap_content"
+                                                                  android:layout_height="wrap_content"
+                                                                  android:text="Save"
+                                                                  android:layout_gravity="center"
+                                                                  android:layout_marginTop="@dimen/spacing_large"
+                                                                  app:icon="@drawable/twotone_save_alt_24px"
+                                                                  android:onClick="save"/>
+
+           </LinearLayout>
+
+       </androidx.core.widget.NestedScrollView>
+
+    </io.codelabs.widget.ForegroundLinearLayout>
+</layout>

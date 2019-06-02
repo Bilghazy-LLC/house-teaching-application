@@ -9,12 +9,6 @@
             android:icon="@drawable/twotone_book_24px"/>
 
     <item
-            android:id="@+id/menu_available_days"
-            android:title="Add available days"
-            app:showAsAction="ifRoom"
-            android:icon="@drawable/twotone_event_white"/>
-
-    <item
             android:id="@+id/menu_recommend"
             android:title="Recommend to friends"
             app:showAsAction="ifRoom"

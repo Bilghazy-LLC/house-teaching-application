@@ -253,8 +253,6 @@ public class UserActivity extends BaseActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.menu_available_days);
-        if (item != null) item.setVisible(prefs.getType().equals(BaseUser.Type.TUTOR));
         MenuItem rateItem = menu.findItem(R.id.menu_rate_tutor);
         if (rateItem != null) rateItem.setVisible(prefs.getType().equals(BaseUser.Type.PARENT));
         MenuItem complaintItem = menu.findItem(R.id.menu_make_complaints);
@@ -315,10 +313,6 @@ public class UserActivity extends BaseActivity {
                 if (shareIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(shareIntent);
                 }
-                return true;
-
-            case R.id.menu_available_days:
-                intentTo(AvailableDaysActivity.class);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

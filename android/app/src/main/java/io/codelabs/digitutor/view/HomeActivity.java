@@ -282,6 +282,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.menu_make_complaints:
                 intentTo(MakeComplaintActivity.class);
                 break;
+            case R.id.menu_add_days:
+                intentTo(AvailableDaysActivity.class);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -337,7 +337,7 @@ public final class FirebaseDataSource {
         });
     }
 
-    public static void fetchAllSchedules(Activity host, @NotNull FirebaseFirestore firestore, String tutor, @NotNull AsyncCallback<List<Schedule>> callback) {
+    public static void fetchAllSchedules(Activity host, @NotNull FirebaseFirestore firestore, String tutor, @NotNull AsyncCallback<List<Timetable>> callback) {
         callback.onStart();
         firestore.collection(Constants.SCHEDULES)
                 .whereEqualTo("tutor", tutor)
@@ -349,7 +349,7 @@ public final class FirebaseDataSource {
                     }
 
                     if (queryDocumentSnapshots != null) {
-                        List<Schedule> schedules = queryDocumentSnapshots.toObjects(Schedule.class);
+                        List<Timetable> schedules = queryDocumentSnapshots.toObjects(Timetable.class);
                         callback.onSuccess(schedules);
                     } else {
                         callback.onError("Unable to load subjects");
@@ -969,8 +969,10 @@ public final class FirebaseDataSource {
     public static void postSchedule(@NotNull BaseActivity host,
                                     @NonNull String ward,
                                     String subject,
-                                    long startDate,
-                                    long endDate,
+                                    String startDate,
+                                    String endDate,
+                                    String day,
+                                    String tutor,
                                     @NotNull AsyncCallback<Void> callback) {
         callback.onStart();
         FirebaseFirestore firestore = host.firestore;
@@ -978,7 +980,7 @@ public final class FirebaseDataSource {
 
         if (prefs.isLoggedIn() && prefs.getType().equals(BaseUser.Type.TUTOR)) {
             DocumentReference document = firestore.collection(Constants.SCHEDULES).document();
-            Schedule schedule = new Schedule(document.getId(), prefs.getKey(), subject, ward, startDate, endDate, false, new Date());
+            Timetable schedule = new Timetable(document.getId(), ward, tutor, subject, day, startDate, endDate);
 
             document.set(schedule)
                     .addOnCompleteListener(host, task -> {
@@ -1036,8 +1038,9 @@ public final class FirebaseDataSource {
                                            String ward,
                                            String tutor,
                                            String subject,
-                                           Date day,
-                                           Long time,
+                                           String day,
+                                           String startTime,
+                                           String endTime,
                                            @NotNull AsyncCallback<Void> callback) {
         callback.onStart();
         FirebaseFirestore firestore = host.firestore;
@@ -1045,7 +1048,39 @@ public final class FirebaseDataSource {
 
         if (prefs.getType().equals(BaseUser.Type.PARENT)) {
             DocumentReference document = firestore.collection(String.format(Constants.TIMETABLES, prefs.getKey(), ward)).document();
-            Timetable timetable = new Timetable(document.getId(), ward, tutor, subject, day, time);
+            Timetable timetable = new Timetable(document.getId(), ward, tutor, subject, day, startTime, endTime);
+            document.set(timetable).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    callback.onSuccess(null);
+                } else {
+                    callback.onError("Unable to create timetable");
+                }
+                callback.onComplete();
+            }).addOnFailureListener(e -> {
+                callback.onError(e.getLocalizedMessage());
+                callback.onComplete();
+            });
+        } else {
+            callback.onError("Please login as a parent first");
+            callback.onComplete();
+        }
+    }
+
+    public static void addTimeTableForTutor(@NotNull BaseActivity host,
+                                            String ward,
+                                            String tutor,
+                                            String subject,
+                                            String day,
+                                            String startTime,
+                                            String endTime,
+                                            @NotNull AsyncCallback<Void> callback) {
+        callback.onStart();
+        FirebaseFirestore firestore = host.firestore;
+        UserSharedPreferences prefs = host.prefs;
+
+        if (prefs.getType().equals(BaseUser.Type.TUTOR)) {
+            DocumentReference document = firestore.collection(String.format(Constants.SCHEDULES, prefs.getKey())).document();
+            Timetable timetable = new Timetable(document.getId(), ward, tutor, subject, day, startTime, endTime);
             document.set(timetable).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     callback.onSuccess(null);

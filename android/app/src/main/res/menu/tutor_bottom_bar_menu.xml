@@ -14,6 +14,12 @@
             android:icon="@drawable/twotone_calendar_today_24px"/>
 
     <item
+            android:id="@+id/menu_add_days"
+            android:title="Available Days"
+            app:showAsAction="never"
+            android:icon="@drawable/twotone_event_24px"/>
+
+    <item
             android:title="Complaints"
             app:showAsAction="never"
             android:id="@+id/menu_complaints"
