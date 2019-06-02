@@ -37,4 +37,18 @@
     <style name="Widget.MyTheme.BottomAppBar" parent="Widget.MaterialComponents.BottomAppBar.Colored">
         <item name="android:popupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
     </style>
+
+    <!--Ratings-->
+    <style name="RatingBar" parent="@android:style/Widget.Material.RatingBar.Indicator">
+        <item name="colorControlNormal">?colorSecondaryVariant</item>
+        <item name="colorControlActivated">?colorPrimary</item>
+    </style>
+
+    <style name="RatingBar.Small" parent="@android:style/Widget.Material.RatingBar.Small">
+        <item name="colorControlNormal">?colorSecondary</item>
+        <item name="colorControlActivated">?colorPrimary</item>
+<!--        <item name="android:maxHeight">32dip</item>-->
+<!--        <item name="android:maxWidth">36dip</item>-->
+    </style>
+
 </resources>

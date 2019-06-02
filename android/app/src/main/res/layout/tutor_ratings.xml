@@ -3,9 +3,19 @@
                                            android:layout_width="match_parent"
                                            android:layout_height="wrap_content"
                                            android:padding="@dimen/padding_normal"
+                                           android:gravity="center"
                                            android:orientation="vertical">
 
-<!--    <Ratin-->
+    <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/ratings_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/RatingBar"
+            android:numStars="5"
+            android:isIndicator="false"
+            android:layout_margin="@dimen/fab_margin"
+            android:rating="2.3"
+            android:stepSize="0.5"/>
 
 
 </io.codelabs.widget.ForegroundLinearLayout>

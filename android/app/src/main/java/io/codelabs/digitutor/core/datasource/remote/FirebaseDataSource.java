@@ -1107,4 +1107,32 @@ public final class FirebaseDataSource {
             callback.onComplete();
         });
     }
+
+    /**
+     * Add available days
+     */
+    public static void addAvailableDays(@NotNull BaseActivity host, @NotNull List<DateTime> availableDays, DateTime dateTime, @NotNull AsyncCallback<Void> callback) {
+        callback.onStart();
+
+        if (host.prefs.getType().equals(BaseUser.Type.TUTOR)) {
+            Map<String, Object> hashMap = new HashMap<>();
+            if (!availableDays.contains(dateTime)) hashMap.put("availableDays", availableDays.add(dateTime));
+            else hashMap.put("availableDays", availableDays);
+
+            host.firestore.collection(Constants.TUTORS).document(host.prefs.getKey())
+                    .update(hashMap)
+                    .addOnFailureListener(e -> {
+                        callback.onError(e.getLocalizedMessage());
+                        callback.onComplete();
+                    }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    callback.onSuccess(null);
+                } else callback.onError("Unable to add available days");
+                callback.onComplete();
+            });
+        } else {
+            callback.onError("Sign in as a tutor first");
+            callback.onComplete();
+        }
+    }
 }

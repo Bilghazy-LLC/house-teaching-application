@@ -15,15 +15,17 @@ import kotlinx.android.parcel.Parcelize
  * [Tutor] data model class
  */
 @Parcelize
-data class Tutor(override var email: String?,
-                 override var name: String?,
-                 override var avatar: String?,
-                 override var key: String,
-                 override var token: String?,
-                 var available: Boolean = true,
-                 var blocked: Boolean = false,
-                 var rating: Double = 1.0,
-                 override var type: String = BaseUser.Type.TUTOR) : BaseUser {
+data class Tutor(
+    override var email: String?,
+    override var name: String?,
+    override var avatar: String?,
+    override var key: String,
+    override var token: String?,
+    var availableDays: MutableList<DateTime> = mutableListOf(),
+    var blocked: Boolean = false,
+    var rating: Double = 1.0,
+    override var type: String = BaseUser.Type.TUTOR
+) : BaseUser {
     constructor() : this("", "", "", "", FirebaseInstanceId.getInstance().token)
 
     companion object {
@@ -31,11 +33,11 @@ data class Tutor(override var email: String?,
         @BindingAdapter("imageUrl", "error")
         fun loadTutorAvatar(imageView: ImageView, @Nullable imageUrl: String?, error: Drawable) {
             GlideApp.with(imageView.context)
-                    .load(imageUrl ?: Constants.DEFAULT_AVATAR_URL)
-                    .circleCrop()
-                    .placeholder(R.drawable.avatar_placeholder)
-                    .error(error)
-                    .into(imageView)
+                .load(imageUrl ?: Constants.DEFAULT_AVATAR_URL)
+                .circleCrop()
+                .placeholder(R.drawable.avatar_placeholder)
+                .error(error)
+                .into(imageView)
         }
     }
 }

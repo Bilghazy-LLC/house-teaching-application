@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="ward" type="io.codelabs.digitutor.data.model.Ward"/>
@@ -97,6 +98,15 @@
         <include
                 android:id="@+id/loading"
                 layout="@layout/loading"/>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:text="Select ward"
+                android:id="@+id/pick_ward"
+                app:icon="@drawable/twotone_supervisor_account_24px"/>
 
     </FrameLayout>
 </layout>

@@ -2,23 +2,22 @@ package io.codelabs.digitutor.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import io.codelabs.digitutor.R;
 import io.codelabs.digitutor.core.util.OnClickListener;
 import io.codelabs.digitutor.data.BaseUser;
+import io.codelabs.digitutor.data.model.Tutor;
 import io.codelabs.digitutor.view.adapter.viewholder.EmptyViewHolder;
 import io.codelabs.digitutor.view.adapter.viewholder.UserViewHolder;
 import io.codelabs.sdk.glide.GlideApp;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -68,6 +67,10 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private void bindUserViewHolder(UserViewHolder holder, int position) {
 
         BaseUser user = users.get(position);
+        if (user instanceof Tutor) {
+            holder.ratingBar.setVisibility(View.VISIBLE);
+            holder.ratingBar.setRating(Float.parseFloat(String.valueOf(((Tutor) user).getRating())));
+        } else holder.ratingBar.setVisibility(View.GONE);
         holder.username.setText(user.getName());
         holder.info.setText(user.getEmail()); // TODO: 005 05.05.19 Get additional information about this parent (Like date added and so on)
 

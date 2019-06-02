@@ -3,6 +3,7 @@ package io.codelabs.digitutor.view.adapter.viewholder;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import io.codelabs.digitutor.R;
@@ -12,6 +13,7 @@ import io.codelabs.widget.CircularImageView;
 public class UserViewHolder extends RecyclerView.ViewHolder {
     public CircularImageView avatar;
     public BaselineGridTextView username, info;
+    public AppCompatRatingBar ratingBar;
 
 
     public UserViewHolder(@NonNull View itemView) {
@@ -19,5 +21,6 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
         this.avatar = itemView.findViewById(R.id.user_avatar);
         this.username = itemView.findViewById(R.id.user_name);
         this.info = itemView.findViewById(R.id.user_info);
+        this.ratingBar = itemView.findViewById(R.id.ratings_bar);
     }
 }

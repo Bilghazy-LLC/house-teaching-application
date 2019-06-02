@@ -21,7 +21,7 @@
             android:id="@+id/user_name"
             app:layout_constraintStart_toEndOf="@id/user_avatar"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ratings_bar"
             android:maxLines="1"
             android:layout_marginStart="@dimen/spacing_normal"
             android:layout_marginEnd="@dimen/spacing_normal"
@@ -44,5 +44,18 @@
             android:textAppearance="?textAppearanceBody2"
             android:textSize="16sp"
             tools:text="@tools:sample/lorem/random"/>
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/ratings_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/RatingBar.Small"
+            android:numStars="5"
+            app:layout_constraintTop_toTopOf="@id/user_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:isIndicator="true"
+            style="@android:style/Widget.Material.RatingBar.Small"
+            android:rating="2.3"
+            android:stepSize="0.5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

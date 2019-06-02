@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.transition.TransitionManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import io.codelabs.digitutor.R;
 import io.codelabs.digitutor.core.base.BaseActivity;
@@ -29,6 +30,7 @@ import io.codelabs.recyclerview.SlideInItemAnimator;
 import io.codelabs.sdk.glide.GlideApp;
 import io.codelabs.sdk.util.ExtensionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TimeTableFragment extends Fragment {
@@ -36,6 +38,7 @@ public class TimeTableFragment extends Fragment {
     private String ward = "";
 
     private TimetableAdapter adapter;
+    private List<String> wards = new ArrayList<>(0);
 
     public TimeTableFragment() {
     }
@@ -87,9 +90,19 @@ public class TimeTableFragment extends Fragment {
                                 if (wards.isEmpty()) {
                                     snackbar.show();
                                 } else {
+                                    (TimeTableFragment.this.wards).addAll(wards);
                                     ward = wards.get(0);
                                     loadWardInfo(ward);
                                     loadWardTimetable(ward);
+                                    CharSequence[] wardsList = {};
+
+
+                                    binding.pickWard.setOnClickListener(v -> {
+                                        new MaterialAlertDialogBuilder(requireActivity()).setTitle("Select a ward...")
+                                                .setSingleChoiceItems(wardsList, 0, (dialog, which) -> {
+
+                                                }).setNegativeButton("Dismiss", (dialog, which) -> dialog.dismiss()).create().show();
+                                    });
                                 }
                             }
                         }

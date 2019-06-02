@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Make Complaints"
-        app:showAsAction="ifRoom"
-        android:id="@+id/menu_make_complaints"
-        android:icon="@drawable/twotone_book_24px" />
+            android:title="Make Complaints"
+            app:showAsAction="ifRoom"
+            android:id="@+id/menu_make_complaints"
+            android:icon="@drawable/twotone_book_24px"/>
 
     <item
-        android:id="@+id/menu_view_schedule"
-        android:title="View Schedules"
-        app:showAsAction="never"
-        android:icon="@drawable/twotone_calendar_today_24px" />
+            android:id="@+id/menu_available_days"
+            android:title="Add available days"
+            app:showAsAction="ifRoom"
+            android:icon="@drawable/twotone_add_24px"/>
+
+    <item
+            android:id="@+id/menu_view_schedule"
+            android:title="View Schedules"
+            app:showAsAction="never"
+            android:icon="@drawable/twotone_calendar_today_24px"/>
 
     <item
             android:id="@+id/menu_rate_tutor"
             android:title="Rate Tutor"
             app:showAsAction="never"
-            android:icon="@drawable/twotone_star_border_24px" />
+            android:icon="@drawable/twotone_star_border_24px"/>
 
 </menu>

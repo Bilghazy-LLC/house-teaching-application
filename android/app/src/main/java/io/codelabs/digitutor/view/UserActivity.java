@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RatingBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.menu.MenuBuilder;
@@ -16,7 +17,9 @@ import io.codelabs.digitutor.R;
 import io.codelabs.digitutor.core.base.BaseActivity;
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource;
 import io.codelabs.digitutor.core.util.AsyncCallback;
+import io.codelabs.digitutor.core.util.Constants;
 import io.codelabs.digitutor.data.BaseUser;
+import io.codelabs.digitutor.data.model.Parent;
 import io.codelabs.digitutor.data.model.Subject;
 import io.codelabs.digitutor.data.model.Tutor;
 import io.codelabs.digitutor.data.model.Ward;
@@ -29,7 +32,9 @@ import io.codelabs.recyclerview.GridItemDividerDecoration;
 import io.codelabs.recyclerview.SlideInItemAnimator;
 import io.codelabs.sdk.util.ExtensionUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserActivity extends BaseActivity {
     public static final String EXTRA_USER = "EXTRA_USER";
@@ -71,6 +76,7 @@ public class UserActivity extends BaseActivity {
             binding.setUser(getIntent().getParcelableExtra(EXTRA_USER));
             ExtensionUtils.debugLog(this, binding.getUser().getType());
             getRequest(binding.getUser().getKey());
+            if (binding.getUser() instanceof Parent) getWards(binding.getUser().getKey());
         } else if (getIntent().hasExtra(EXTRA_USER_UID)) {
             Snackbar snackbar = Snackbar.make(binding.container, "Fetching user information", Snackbar.LENGTH_INDEFINITE);
             FirebaseDataSource.getUser(this, firestore, getIntent().getStringExtra(EXTRA_USER_UID), getIntent().getStringExtra(EXTRA_USER_TYPE), new AsyncCallback<BaseUser>() {
@@ -112,6 +118,7 @@ public class UserActivity extends BaseActivity {
             @Override
             public void onSuccess(@Nullable List<Ward> response) {
                 if (response != null) {
+                    ExtensionUtils.debugLog(UserActivity.this, response);
                     binding.setHasWards(!response.isEmpty());
                     usersAdapter.addData(response);
                 }
@@ -136,7 +143,7 @@ public class UserActivity extends BaseActivity {
      */
     private void getRequest(String key) {
         // Snackbar to show notification on the screen for the current user
-        Snackbar snackbar = Snackbar.make(binding.container, "", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(binding.container, "Unknown error occurred", Snackbar.LENGTH_LONG);
         binding.tutorContent.setVisibility(binding.getUser().getType().equals(BaseUser.Type.TUTOR) ? View.VISIBLE : View.GONE);
 
         FirebaseDataSource.getSentRequests(UserActivity.this, firestore, prefs, key, new AsyncCallback<Boolean>() {
@@ -231,6 +238,15 @@ public class UserActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.menu_available_days);
+        if (item != null) item.setVisible(prefs.getType().equals(BaseUser.Type.TUTOR));
+        MenuItem rateItem = menu.findItem(R.id.menu_rate_tutor);
+        if (rateItem != null) rateItem.setVisible(prefs.getType().equals(BaseUser.Type.PARENT));
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_make_complaints:
@@ -251,7 +267,17 @@ public class UserActivity extends BaseActivity {
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(UserActivity.this).setTitle("Rate tutor")
                         .setView(v)
                         .setPositiveButton("Send", (dialog, which) -> {
+                            dialog.dismiss();
+                            String uid = getIntent().hasExtra(EXTRA_USER_UID) ? getIntent().getStringExtra(EXTRA_USER_UID) : ((BaseUser) getIntent().getParcelableExtra(EXTRA_USER)).getKey();
+                            Map<String, Object> map = new HashMap<>(0);
+                            map.put("rating", ((RatingBar) v.findViewById(R.id.ratings_bar)).getRating());
 
+                            firestore.collection(Constants.TUTORS).document(uid).update(map)
+                                    .addOnCompleteListener(task -> {
+                                    })
+                                    .addOnFailureListener(e -> {
+                                    });
+                            ExtensionUtils.toast(getApplicationContext(), "Rating tutor...", false);
                         }).setNegativeButton("Dismiss", (dialog, which) -> dialog.dismiss());
                 AlertDialog dialog = builder.create();
                 dialog.setCanceledOnTouchOutside(false);

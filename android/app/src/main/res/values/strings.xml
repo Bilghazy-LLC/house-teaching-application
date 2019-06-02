@@ -52,4 +52,5 @@
     <string name="tutors">All tutors</string>
     <string name="clients">All parents</string>
     <string name="search_prompt">Search tutors &amp; Subjects from here</string>
+    <string name="available_days">Available Days</string>
 </resources>
