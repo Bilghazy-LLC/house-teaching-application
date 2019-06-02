@@ -125,10 +125,10 @@ exports.sendRequest = functions.firestore.document('requests/{requestId}').onCre
         });
 });
 
-exports.notifyRequest = functions.firestore.document('requests/{requestId}').onWrite((change, context) => {
+exports.notifyRequest = functions.firestore.document('requests/{requestId}').onDelete((change, context) => {
     // Extract the user's ID
     var requestId = context.params.requestId ? context.params.requestId : change.id;
-    var data = change.before.data();
+    var data = change.data();
 
     // Get the parent and the tutor
     var parent = data.parent;

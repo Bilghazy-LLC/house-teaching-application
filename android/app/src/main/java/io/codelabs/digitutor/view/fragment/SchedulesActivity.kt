@@ -35,7 +35,7 @@ class SchedulesActivity : BaseActivity() {
     private var startDate: Long? = null
     private var endDate: Long? = null
     private var subject: Subject? = null
-    private var ward: String = ""
+//    private var ward: String = ""
     private val subjects = mutableListOf<Subject>()
     private val names = mutableListOf<String>()
     private lateinit var adapter: TimetableAdapter
@@ -44,7 +44,7 @@ class SchedulesActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_schedules)
         setSupportActionBar(binding.toolbar)
-        binding.toolbar.setNavigationOnClickListener { v -> onBackPressed() }
+        binding.toolbar.setNavigationOnClickListener { _ -> onBackPressed() }
 
         binding.isTutor = prefs.type == BaseUser.Type.TUTOR
 

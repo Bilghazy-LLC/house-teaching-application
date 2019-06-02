@@ -44,6 +44,7 @@ public class AppMessagingService extends FirebaseMessagingService {
         Map<String, String> data = remoteMessage.getData();
         createNotificationChannel(getString(R.string.default_notification_channel_id));
         if (data.containsKey("type")) {
+            ExtensionUtils.debugLog(getApplicationContext(), "Notification Type: " + data.get("type"));
 
             switch (Objects.requireNonNull(data.get("type"))) {
                 case TYPE_REQUEST:

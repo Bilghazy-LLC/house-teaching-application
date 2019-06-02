@@ -14,6 +14,7 @@ import io.codelabs.digitutor.R
 import io.codelabs.digitutor.core.base.BaseActivity
 import io.codelabs.digitutor.core.datasource.remote.FirebaseDataSource
 import io.codelabs.digitutor.core.util.AsyncCallback
+import io.codelabs.digitutor.core.util.OnClickListener
 import io.codelabs.digitutor.data.BaseUser
 import io.codelabs.digitutor.data.model.Parent
 import io.codelabs.digitutor.data.model.Timetable
@@ -25,6 +26,7 @@ import io.codelabs.digitutor.view.kotlin.WardsActivity
 import io.codelabs.recyclerview.SlideInItemAnimator
 import io.codelabs.sdk.glide.GlideApp
 import io.codelabs.sdk.util.debugLog
+import io.codelabs.sdk.util.toast
 import java.util.*
 
 class TimeTableActivity : BaseActivity() {
@@ -37,7 +39,10 @@ class TimeTableActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.fragment_timetable)
 
-        adapter = TimetableAdapter(this)
+        adapter = TimetableAdapter(this, false, OnClickListener { item, _ ->
+            debugLog(item)
+            toast(item)
+        })
         binding.grid?.adapter = adapter
         val lm = LinearLayoutManager(this)
         binding.grid?.layoutManager = lm

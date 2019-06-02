@@ -212,7 +212,8 @@ public class UserActivity extends BaseActivity {
     public void requestService(View view) {
         if (binding.getUser() != null && binding.getUser() instanceof Tutor) {
             Bundle bundle = new Bundle(0);
-
+            bundle.putParcelable(SchedulesActivity.EXTRA_TUTOR, binding.getUser());
+            bundle.putString(SchedulesActivity.EXTRA_TUTOR_ID, binding.getUser().getKey());
             intentTo(SchedulesActivity.class, bundle, false);
         } else {
             ExtensionUtils.toast(this, "Cannot send request. Please make sure that this request is sent to a tutor instead", true);
@@ -259,6 +260,9 @@ public class UserActivity extends BaseActivity {
                 Bundle bundle = new Bundle(0);
                 bundle.putParcelable(SchedulesActivity.EXTRA_TUTOR, getIntent().getParcelableExtra(EXTRA_USER));
                 bundle.putString(SchedulesActivity.EXTRA_TUTOR_ID, getIntent().getStringExtra(EXTRA_USER_UID));
+                bundle.putParcelable(SchedulesActivity.EXTRA_TUTOR, binding.getUser());
+                bundle.putString(SchedulesActivity.EXTRA_TUTOR_ID, binding.getUser().getKey());
+
                 intentTo(SchedulesActivity.class, bundle, false);
                 return true;
 
